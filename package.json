@@ -1,0 +1,21 @@
+{
+  "name": "alimentacao-site",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run sync && npm run plans:mp && next build",
+    "start": "next start",
+    "sync": "node scripts/sync-content.mjs",
+    "plans:mp": "node scripts/create-mercado-pago-plans.mjs"
+  },
+  "dependencies": {
+    "@sanity/client": "^8.4.0",
+    "@sanity/image-url": "^2.1.1",
+    "next": "^16.3.8",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  }
+}

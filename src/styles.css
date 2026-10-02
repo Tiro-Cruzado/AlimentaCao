@@ -1,0 +1,497 @@
+/* Page base. */
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: #FBF8F4;
+  color: #23312F;
+  font-family: Lora, Georgia, serif;
+}
+
+/* Styles that depend on a media query or a pseudo-class and so do not fit
+   in an inline style. The rest of the site keeps inline styles in the components. */
+
+:root {
+  color-scheme: light;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+/* Visible focus for keyboard navigation. Without this, Tab is invisible. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #467333;
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid #467333;
+  outline-offset: 2px;
+}
+
+/* Header: logo | links | button on a single line. On mobile, logo and button
+   stay on the first line and the links drop to the second — before, the
+   "Doar agora" button wrapped to a line of its own. */
+.header-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px 22px;
+}
+
+.header-logo {
+  margin-right: auto;
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+@media (max-width: 560px) {
+  .header-bar {
+    flex-wrap: wrap;
+    padding-top: 12px !important;
+    padding-bottom: 10px !important;
+  }
+  .header-cta {
+    order: 2;
+    padding: 9px 16px !important;
+    font-size: 14.5px !important;
+  }
+  /* On mobile these leave the links row: "Doar" (the "Doar agora" button is already
+     next to the logo) and "Mural" (it is in the footer and on the home) — otherwise it does not fit. */
+  .header-link-donate,
+  .header-link-wall {
+    display: none;
+  }
+  .header-links {
+    order: 3;
+    width: 100%;
+    gap: 20px;
+    font-size: 14.5px !important;
+  }
+  /* Hero badge on a single line on narrow screens. */
+  .hero-badge {
+    font-size: 11px !important;
+    letter-spacing: 0.08em !important;
+    padding: 7px 12px !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .header-bar {
+    gap: 10px 14px;
+  }
+  .header-logo > svg {
+    height: 26px;
+    width: auto;
+  }
+  .header-logo > span:last-child {
+    font-size: 17px !important;
+  }
+  .header-cta {
+    padding: 8px 13px !important;
+    font-size: 13.5px !important;
+  }
+  .hero-badge {
+    font-size: 10px !important;
+    letter-spacing: 0.05em !important;
+  }
+}
+
+/* Gallery fullscreen: on mobile the arrows move below the photo, so they
+   do not cover it. Swiping with a finger also works. */
+@media (max-width: 600px) {
+  .fullscreen-arrow {
+    top: auto !important;
+    bottom: 14px;
+    transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- wall clothesline
+   Rope that sags in the middle, nails at the ends, tilted polaroids held by
+   a peg. The height of each photo follows the rope (padding-top calculated in
+   Wall.jsx). */
+.clothesline-narrow {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .clothesline-wide {
+    display: none;
+  }
+  .clothesline-narrow {
+    display: block;
+  }
+}
+
+.clothesline-row {
+  position: relative;
+  padding: 0 clamp(4px, 2vw, 18px);
+  margin-bottom: clamp(26px, 4vw, 44px);
+}
+
+.clothesline-rope {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 52px;
+  overflow: visible;
+}
+
+.clothesline-nail {
+  position: absolute;
+  top: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #C9C2B6, #6E675C);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.clothesline-nail-left {
+  left: -4px;
+}
+
+.clothesline-nail-right {
+  right: -4px;
+}
+
+.clothesline-slots {
+  position: relative;
+  display: grid;
+  gap: clamp(10px, 2.4vw, 30px);
+  align-items: start;
+}
+
+.clothesline-slot {
+  display: flex;
+  justify-content: center;
+  /* the photo hangs a little below the rope; the peg reaches up to it */
+  margin-top: 12px;
+}
+
+.polaroid {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 210px;
+  padding: 8px 8px 30px;
+  border: none;
+  border-radius: 3px;
+  background: #FFFDFB;
+  box-shadow: 0 2px 4px rgba(35, 49, 47, 0.12), 0 10px 22px rgba(35, 49, 47, 0.14);
+  cursor: zoom-in;
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: 50% -14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s;
+}
+
+.polaroid:hover,
+.polaroid:focus-visible {
+  transform: rotate(calc(var(--tilt, 0deg) * 0.3)) translateY(4px) scale(1.04);
+  box-shadow: 0 4px 8px rgba(35, 49, 47, 0.14), 0 18px 34px rgba(35, 49, 47, 0.2);
+  z-index: 3;
+}
+
+.polaroid:focus-visible {
+  outline: 2px solid #467333;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+.polaroid-photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #2A2F2C;
+}
+
+.polaroid-photo img,
+.polaroid-photo video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid-badge {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFDFB;
+}
+
+.polaroid-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding-left: 3px;
+  border-radius: 50%;
+  background: rgba(255, 253, 251, 0.92);
+  color: #23312F;
+}
+
+/* Wooden peg: two prongs with the spring in the middle. */
+.clothesline-peg {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  width: 13px;
+  height: 40px;
+  margin-left: -6.5px;
+  border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(90deg, #C9A06A 0%, #E2C291 45%, #D4AF7A 55%, #B98F5A 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.clothesline-peg::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  bottom: 2px;
+  width: 1px;
+  background: rgba(110, 80, 40, 0.45);
+}
+
+.clothesline-peg span {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 15px;
+  height: 5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #D7D3CB, #8E897F);
+}
+
+@media (max-width: 700px) {
+  .polaroid {
+    padding: 6px 6px 22px;
+  }
+  .clothesline-peg {
+    top: -18px;
+    width: 10px;
+    height: 32px;
+    margin-left: -5px;
+  }
+  .clothesline-peg span {
+    top: 12px;
+    height: 4px;
+  }
+  .polaroid-play {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .polaroid {
+    transition: none;
+  }
+}
+
+/* Top of the animal list: when changing pages, the list scrolls up to here. The
+   margin makes room for the fixed header (66px on desktop, ~85px on mobile). */
+.gallery-list-top {
+  scroll-margin-top: 104px;
+}
+
+/* Animal page layout: two columns on desktop, one on mobile.
+   Without the media query, the 280px side column squeezed the gallery to nothing. */
+.animal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 1fr);
+  gap: clamp(24px, 4vw, 44px);
+  align-items: start;
+  margin-top: 32px;
+}
+
+.animal-aside {
+  position: sticky;
+  top: 84px;
+}
+
+@media (max-width: 920px) {
+  .animal-layout {
+    grid-template-columns: 1fr;
+  }
+  .animal-aside {
+    position: static;
+    top: auto;
+  }
+}
+
+/* Opening: dog photo pinned in the background (sticky), with the title and the cards
+   passing over it. The JS in Opening.jsx only adjusts --exit (0 → 1) following the
+   scroll: the title fades out, the veil darkens and the cards come in. Without JS, everything
+   shows up static and readable. */
+.opening {
+  position: relative;
+  background: #2A2724;
+}
+
+/* The track fills the whole opening; the layer inside it is what sticks to the top.
+   This way the photo stays still while scrolling, but never goes past the end of the section. */
+.opening-track {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.opening-backdrop {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.opening-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 40%;
+  transform: scale(calc(1 + var(--exit, 0) * 0.06));
+  transform-origin: 70% 40%;
+}
+
+/* Fixed veil: darkens the text side. */
+.opening-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(24, 22, 20, 0.86) 0%, rgba(24, 22, 20, 0.62) 42%, rgba(24, 22, 20, 0.08) 72%, rgba(24, 22, 20, 0) 100%);
+}
+
+/* Veil that grows with the scroll, so the white cards do not fight with the photo. */
+.opening-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(24, 22, 20, 0.5);
+  opacity: var(--exit, 0);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 66px);
+  min-height: calc(100svh - 66px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: calc(1 - var(--exit, 0) * 1.3);
+  transform: translateY(calc(var(--exit, 0) * -48px));
+}
+
+.hero-title {
+  color: #FFFDFB;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.25);
+}
+
+.hero-text {
+  color: rgba(255, 253, 251, 0.9);
+}
+
+/* "How to help" cards: 4 columns, 2 on medium screens, 1 on mobile — never
+   three on top and one alone below. */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.benefits {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cards come in one at a time when they reach the screen. The .animate class is only
+   added by the JS, so without JS (or in the pre-rendered HTML) they already show. */
+.animate .benefit {
+  opacity: 0;
+  transform: translateY(56px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.animate .benefit.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mobile: the photo stays in the background; the text moves to the bottom of the screen, over
+   a bottom-to-top veil, and the dog's face stays clear at the top. */
+@media (max-width: 1100px) {
+  .opening-photo {
+    object-position: 74% 30%;
+  }
+  .opening-backdrop::before {
+    background: linear-gradient(0deg, rgba(24, 22, 20, 0.92) 0%, rgba(24, 22, 20, 0.72) 38%, rgba(24, 22, 20, 0.2) 68%, rgba(24, 22, 20, 0.05) 100%);
+  }
+  .hero-content {
+    justify-content: flex-end;
+    padding-bottom: clamp(40px, 8vh, 72px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Photo a little larger and pulled up: the dog's eyes sit above
+     the title instead of behind it. */
+  .opening-photo {
+    inset: auto 0 auto 0;
+    top: -22%;
+    height: 122%;
+  }
+  .hero-content {
+    min-height: calc(100vh - 86px);
+    min-height: calc(100svh - 86px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-photo,
+  .hero-content {
+    transform: none !important;
+  }
+  .animate .benefit {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

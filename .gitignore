@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+.vercel/
+dist/
+dist-ssr/
+.DS_Store
+*.local
+.env
+.env.local
+pix-teste.png
+_to_delete/
+.vercel
+.env*
+.sanity/

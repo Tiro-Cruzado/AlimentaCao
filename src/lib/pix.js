@@ -43,16 +43,23 @@ export function crc16(text) {
  * @param {string} options.city     Recipient city, up to 15 characters
  * @param {number} [options.amount] Amount in reais. Omitted = the donor types how much
  * @param {string} [options.txid]   Up to 25 characters, no spaces. Shows up in reconciliation
+ * @param {string} [options.description] Message that goes with the Pix ("Informações
+ *   adicionais"). Most banking apps show it to the donor before confirming and
+ *   in the receipt. Trimmed to fit: key + description share 99 characters.
  * @returns {string} code ready to be copied or turned into a QR
  */
-export function buildPixPayload({ key, name, city, amount, txid = "***" }) {
+export function buildPixPayload({ key, name, city, amount, txid = "***", description = "" }) {
   if (!key) return "";
 
   const cleanName = asciiOnly(name || "RECEBEDOR").slice(0, 25) || "RECEBEDOR";
   const cleanCity = asciiOnly(city || "BRASIL").slice(0, 15) || "BRASIL";
   const cleanTxid = asciiOnly(txid).replace(/\s+/g, "").slice(0, 25) || "***";
 
-  const pixAccount = field("00", "br.gov.bcb.pix") + field("01", asciiOnly(key));
+  let pixAccount = field("00", "br.gov.bcb.pix") + field("01", asciiOnly(key));
+  // Field 26 holds at most 99 characters; the description gets whatever is left.
+  const room = 99 - pixAccount.length - 4;
+  const cleanDescription = asciiOnly(description).slice(0, Math.max(0, room)).trim();
+  if (cleanDescription) pixAccount += field("02", cleanDescription);
 
   let payload =
     field("00", "01") +

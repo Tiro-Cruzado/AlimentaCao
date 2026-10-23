@@ -245,6 +245,7 @@ export default function DonateForm() {
         city: PIX.city,
         amount: qrAmount,
         txid: `DOACAO${qrAmount}`,
+        description: PIX.description,
       })
     : "";
 

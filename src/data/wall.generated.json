@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "id": "f61c9dee-cd17-4d45-a278-e974cc78359c",
+    "title": "Adoção Maria Flávia",
+    "date": "2026-10-13",
+    "category": "adoption",
+    "text": "",
+    "animals": [],
+    "media": [
+      {
+        "type": "video",
+        "src": "https://cdn.sanity.io/files/wberp9dd/production/b0faacad2587406ccfa5d6e26699089106b00c98.mp4",
+        "poster": "",
+        "thumbnail": "",
+        "focus": "50% 35%",
+        "alt": "Adoção de gatinho na feira ",
+        "caption": "",
+        "sensitive": false
+      }
+    ]
+  },
+  {
+    "id": "ff41632a-6ade-46e6-973a-e2aa2c1fe146",
+    "title": "Resgate de Animal",
+    "date": "2026-09-16",
+    "category": "rescue",
+    "text": "",
+    "animals": [],
+    "media": [
+      {
+        "type": "video",
+        "src": "https://cdn.sanity.io/files/wberp9dd/production/a31cdb49bf591785ee24290b1ed97a2ff596d7ab.mp4",
+        "poster": "",
+        "thumbnail": "",
+        "focus": "50% 35%",
+        "alt": "Regate ",
+        "caption": "",
+        "sensitive": false
+      }
+    ]
+  },
+  {
+    "id": "5d4c5ffb-e792-40b0-903f-d2cb80b77f9a",
+    "title": "Feira de adoção em frente ao parque buracão",
+    "date": "2026-07-18",
+    "category": "event",
+    "text": "",
+    "animals": [],
+    "media": [
+      {
+        "type": "video",
+        "src": "https://cdn.sanity.io/files/wberp9dd/production/6ba18b4112f6d8862f165ec4c59f651b41cc818c.mp4",
+        "poster": "",
+        "thumbnail": "",
+        "focus": "50% 35%",
+        "alt": "Apoio de rádio interative 100,1FM",
+        "caption": "Apoio de rádio interative 100,1FM",
+        "sensitive": false
+      }
+    ]
+  },
+  {
+    "id": "92da8a69-517e-4f6b-8aab-214964c29550",
+    "title": "Regate de animal",
+    "date": "2026-01-13",
+    "category": "rescue",
+    "text": "",
+    "animals": [],
+    "media": [
+      {
+        "type": "video",
+        "src": "https://cdn.sanity.io/files/wberp9dd/production/b784f682ba65afb1e815122f622d38935f5e3c51.mp4",
+        "poster": "",
+        "thumbnail": "",
+        "focus": "50% 35%",
+        "alt": "resgate de animal",
+        "caption": "",
+        "sensitive": true
+      }
+    ]
+  }
+]

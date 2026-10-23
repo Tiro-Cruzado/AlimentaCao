@@ -49,16 +49,34 @@ const builder = createImageUrlBuilder(client);
 const imageUrl = (img, width) =>
   img?.asset ? builder.image(img).width(width).quality(80).auto("format").url() : "";
 
+// Which part of the photo stays visible when the site crops it (card, cover,
+// grid). Comes from the hotspot the volunteer sets in the Studio; positioned
+// relative to the crop, since the URL already applies it. Without a hotspot,
+// leans slightly up: in animal photos the face is usually above the center.
+const DEFAULT_FOCUS = "50% 35%";
+function focusOf(img) {
+  const h = img?.hotspot;
+  if (!h || typeof h.x !== "number" || typeof h.y !== "number") return DEFAULT_FOCUS;
+  const c = img.crop || {};
+  const left = c.left || 0, right = c.right || 0, top = c.top || 0, bottom = c.bottom || 0;
+  const pct = (v, a, b) => {
+    const span = 1 - a - b;
+    const rel = span > 0 ? (v - a) / span : 0.5;
+    return Math.round(Math.min(1, Math.max(0, rel)) * 100);
+  };
+  return `${pct(h.x, left, right)}% ${pct(h.y, top, bottom)}%`;
+}
+
 const QUERY = `*[_type == "animal" && defined(slug.current)] | order(rescueDate asc) {
   name, "slug": slug.current, species, speciesOther, size, sex, age, status, urgent,
   location, summary, story, rescueDate, adoptionDate, temperament, health, goodWith,
-  media[]{ _type, alt, caption, asset, poster, sensitive }
+  media[]{ _type, alt, caption, asset, crop, hotspot, poster, sensitive }
 }`;
 
 const WALL_QUERY = `*[_type == "wallPost" && defined(date)] | order(date desc) {
   _id, title, date, category, text,
   "animals": animals[]->{ name, "slug": slug.current },
-  media[]{ _type, alt, caption, asset, poster, sensitive }
+  media[]{ _type, alt, caption, asset, crop, hotspot, poster, sensitive }
 }`;
 
 function paragraphs(text) {
@@ -76,6 +94,7 @@ function convertMedia(media, fileUrls) {
         src: fileUrls.get(m.asset?._ref) || "",
         poster: imageUrl(m.poster, 1200),
         thumbnail: imageUrl(m.poster, 480),
+        focus: focusOf(m.poster),
         alt: m.alt || "",
         caption: m.caption || "",
         sensitive: Boolean(m.sensitive)
@@ -87,6 +106,7 @@ function convertMedia(media, fileUrls) {
       // Light version for the "Fotos e vídeos" grid: with 20 photos, downloading
       // the 1400px one for all of them would weigh several MB on mobile.
       thumbnail: imageUrl(m, 480),
+      focus: focusOf(m),
       alt: m.alt || "",
       caption: m.caption || "",
       sensitive: Boolean(m.sensitive)

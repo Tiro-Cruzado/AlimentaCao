@@ -1,24 +1,28 @@
 [
   {
-    "slug": "upito",
-    "name": "Upito",
+    "slug": "vitoria",
+    "name": "Vitória",
     "species": "dog",
     "size": "small",
-    "sex": "Macho",
-    "age": "2 meses",
-    "rescueDate": "2026-08-18",
-    "status": "adopted",
+    "sex": "Fêmea",
+    "age": "Adulto",
+    "rescueDate": "2026-10-21",
+    "status": "in_treatment",
     "urgent": false,
     "location": "",
-    "summary": "Foi encontrado no Rio de Janeiro São Gonçalo, no município de mutua",
+    "summary": "Resgatada de um saco de lixo, cheia de medo, a Vitória provou que quer viver! Hoje está a recuperar e precisa de ajuda médica para encontrar o seu final feliz. Toda a vida importa!",
     "story": [
-      "hisotira testeeee"
+      "História da Vitória: Do Abandono ao Recomeço 🐾💖",
+      "O nome Vitória não foi escolhido por acaso. Essa princesinha encarou um dos momentos mais difíceis que um animalzinho poderia passar: ela foi encontrada abandonada dentro de um saco de lixo, tomada pelo medo e pela fraqueza. Mas, apesar de tudo o que enfrentou, o olhar doce da Vitória carrega uma força gigantesca.",
+      "Ela renasceu e nos mostrou que a vontade de viver é maior do que qualquer dor. Hoje, a Vitória está em processo de recuperação, aprendendo aos poucos que o mundo também pode ter carinho, caminhas quentinhas e mãos gentis.",
+      "Ainda temos um caminho pela frente na reabilitação e cuidados médicos para que ela fique 100% forte. Mas sabemos que o capítulo mais bonito da história dela está prestes a ser escrito: aquele em que ela encontra uma família cheia de amor para dar!",
+      "✨ Toda vida importa. Vamos juntos dar esse recomeço perfeito para a nossa Vitória?"
     ],
     "temperament": [],
     "health": {
       "neutered": false,
-      "vaccinated": true,
-      "dewormed": true,
+      "vaccinated": false,
+      "dewormed": false,
       "notes": ""
     },
     "goodWith": {
@@ -29,9 +33,28 @@
     "media": [
       {
         "type": "image",
-        "src": "https://cdn.sanity.io/images/wberp9dd/production/65a8e9e72eb31f6341dac55fd390a95831305da0-5062x3379.jpg?w=1400&q=80&auto=format",
-        "thumbnail": "https://cdn.sanity.io/images/wberp9dd/production/65a8e9e72eb31f6341dac55fd390a95831305da0-5062x3379.jpg?w=480&q=80&auto=format",
-        "alt": "Fofinho",
+        "src": "https://cdn.sanity.io/images/wberp9dd/production/cfb450d78d9c857006d97ae016b5cf55d7adb537-960x1280.jpg?rect=0,0,960,817&w=1400&q=80&auto=format",
+        "thumbnail": "https://cdn.sanity.io/images/wberp9dd/production/cfb450d78d9c857006d97ae016b5cf55d7adb537-960x1280.jpg?rect=0,0,960,817&w=480&q=80&auto=format",
+        "focus": "50% 50%",
+        "alt": "Vitória agora",
+        "caption": "",
+        "sensitive": false
+      },
+      {
+        "type": "image",
+        "src": "https://cdn.sanity.io/images/wberp9dd/production/3e199337f5030a98b04d26e9d2beddf8846b214b-1600x1200.jpg?w=1400&q=80&auto=format",
+        "thumbnail": "https://cdn.sanity.io/images/wberp9dd/production/3e199337f5030a98b04d26e9d2beddf8846b214b-1600x1200.jpg?w=480&q=80&auto=format",
+        "focus": "50% 35%",
+        "alt": "Resgate",
+        "caption": "",
+        "sensitive": false
+      },
+      {
+        "type": "image",
+        "src": "https://cdn.sanity.io/images/wberp9dd/production/7eb23797426a84d692324269f574a44aa2928770-1200x1600.jpg?w=1400&q=80&auto=format",
+        "thumbnail": "https://cdn.sanity.io/images/wberp9dd/production/7eb23797426a84d692324269f574a44aa2928770-1200x1600.jpg?w=480&q=80&auto=format",
+        "focus": "50% 35%",
+        "alt": "Regaste",
         "caption": "",
         "sensitive": false
       }

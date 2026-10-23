@@ -62,7 +62,8 @@ export default function AnimalPage({ slug }) {
     ["Castrado", animal.health.neutered],
     ["Vacinado", animal.health.vaccinated],
     ["Vermifugado", animal.health.dewormed]
-  ];
+  ].filter(([, done]) => done === true);
+  const showHealth = healthItems.length > 0 || Boolean(animal.health.notes);
 
   return (
     <main style={{ background: colors.background, paddingBottom: "clamp(50px,8vw,90px)" }}>
@@ -129,18 +130,24 @@ export default function AnimalPage({ slug }) {
             <Row label="Onde está">{animal.location}</Row>
             <Row label="Porte">{size.label} · {size.detail}</Row>
 
-            <h3 style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 13, letterSpacing: "0.07em", textTransform: "uppercase", color: colors.ink3, margin: "22px 0 10px" }}>
-              Saúde
-            </h3>
-            <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
-              {healthItems.map(([label, ok]) => (
-                <span key={label} style={{ fontFamily: fonts.heading, fontWeight: 600, fontSize: 12.5, padding: "6px 11px", borderRadius: 999, background: ok ? colors.greenLight : colors.amberLight, color: ok ? colors.greenDark : "#8A5A12" }}>
-                  {ok ? "✓" : "○"} {label}
-                </span>
-              ))}
-            </div>
-            {animal.health.notes && (
-              <p style={{ fontSize: 14, lineHeight: 1.6, color: colors.ink2, margin: "12px 0 0" }}>{animal.health.notes}</p>
+            {showHealth && (
+              <>
+                <h3 style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 13, letterSpacing: "0.07em", textTransform: "uppercase", color: colors.ink3, margin: "22px 0 10px" }}>
+                  Saúde
+                </h3>
+                {healthItems.length > 0 && (
+                  <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+                    {healthItems.map(([label]) => (
+                      <span key={label} style={{ fontFamily: fonts.heading, fontWeight: 600, fontSize: 12.5, padding: "6px 11px", borderRadius: 999, background: colors.greenLight, color: colors.greenDark }}>
+                        ✓ {label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {animal.health.notes && (
+                  <p style={{ fontSize: 14, lineHeight: 1.6, color: colors.ink2, margin: healthItems.length > 0 ? "12px 0 0" : 0 }}>{animal.health.notes}</p>
+                )}
+              </>
             )}
 
             <h3 style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 13, letterSpacing: "0.07em", textTransform: "uppercase", color: colors.ink3, margin: "22px 0 4px" }}>

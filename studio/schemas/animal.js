@@ -85,7 +85,7 @@ export default {
     },
     {
       name: "media", title: "Fotos e vídeos", type: "array", group: "media",
-      description: "A primeira foto é a que aparece na galeria. Escolha a que mostra o olhar do animal. Fotos marcadas como sensíveis são puladas na hora de escolher a capa.",
+      description: "A primeira foto é a que aparece na galeria. Escolha a que mostra o olhar do animal. Fotos marcadas como sensíveis são puladas na hora de escolher a capa. Depois de enviar a foto, clique no ícone de recorte e arraste o círculo até o rosto do animal: é essa parte que o site mantém visível.",
       of: [
         {
           type: "image", name: "photo", title: "Foto", options: { hotspot: true },

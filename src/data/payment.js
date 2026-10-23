@@ -45,6 +45,12 @@ export const PIX = {
   recipientName: "Rosemeire Maria de Lima",
   city: "Assis",
 
+  // Message that goes with every Pix. Most banking apps show it to the donor
+  // before confirming and in the receipt, so it is clear the money is for the
+  // NGO even while it lands in the treasurer's account. Accents are removed
+  // (the standard only accepts ASCII). "" leaves it out.
+  description: "Doacao para a ONG AlimentaCao",
+
   // While the NGO's legal registration is in progress, the Pix goes to the
   // account of the treasurer, who is responsible for the project's finances.
   // When the NGO has its own account: change the key (PIX_KEY), the two names

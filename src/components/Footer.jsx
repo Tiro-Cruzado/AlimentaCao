@@ -116,7 +116,12 @@ export default function Footer() {
           }}
         >
           <span style={{ color: "#23312F", fontWeight: 700 }}>Contato</span>
-          <span style={{ color: "#5F6D6B" }}>contato@alimentacao.org</span>
+          <a
+            href={`mailto:${CONTACT.email}`}
+            style={{ color: "#5F6D6B", textDecoration: "none", overflowWrap: "anywhere" }}
+          >
+            {CONTACT.email}
+          </a>
           {CONTACT.whatsapp && (
             <a
               href={`https://wa.me/${CONTACT.whatsapp}`}

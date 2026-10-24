@@ -356,8 +356,11 @@ input:focus-visible {
 .opening-backdrop {
   position: sticky;
   top: 0;
+  /* lvh = the screen height with the browser bar hidden. With svh, on mobile the
+     photo was sized for the screen WITH the bar, and once the bar hid on scroll a
+     dark band showed below it. */
   height: 100vh;
-  height: 100svh;
+  height: 100lvh;
   overflow: hidden;
 }
 

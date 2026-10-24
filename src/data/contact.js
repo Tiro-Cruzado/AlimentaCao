@@ -3,7 +3,7 @@
 // whatsapp: digits only, with country and area code. E.g. "5511999998888".
 export const CONTACT = {
   whatsapp: "5518996399691",
-  email: "contato@alimentacao.org.br",
+  email: "ongassis.alimentacao@gmail.com",
   legalName: "Associação AlimentaCão"
 };
 

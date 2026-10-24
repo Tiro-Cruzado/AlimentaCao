@@ -173,6 +173,8 @@ export default function AnimalPage({ slug }) {
               <div style={{ marginTop: 22, display: "flex", flexDirection: "column", gap: 10 }}>
                 <a
                   href={adoptionLink(animal.name)}
+                  data-track="quero_adotar"
+                  data-track-label={animal.name}
                   style={{ display: "block", textAlign: "center", fontFamily: fonts.heading, fontWeight: 700, fontSize: 16, background: colors.greenDark, color: colors.card, padding: "14px 20px", borderRadius: 999, textDecoration: "none" }}
                 >
                   Quero adotar {animal.name}
@@ -187,6 +189,8 @@ export default function AnimalPage({ slug }) {
                 ) : FEATURES.donation ? (
                   <a
                     href="/#doar"
+                    data-track="ajudar_animal"
+                    data-track-label={animal.name}
                     style={{ display: "block", textAlign: "center", fontFamily: fonts.heading, fontWeight: 700, fontSize: 15, background: colors.card, color: colors.greenDark, border: `1.5px solid ${colors.lineStrong}`, padding: "13px 20px", borderRadius: 999, textDecoration: "none" }}
                   >
                     Ajudar com uma doação

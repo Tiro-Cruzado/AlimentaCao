@@ -1,5 +1,6 @@
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
+import Analytics from "../components/Analytics.jsx";
 import { SITE, toNextMetadata } from "../lib/metadata.js";
 import "../styles.css";
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );

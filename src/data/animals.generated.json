@@ -59,5 +59,57 @@
         "sensitive": false
       }
     ]
+  },
+  {
+    "slug": "lala",
+    "name": "Lala",
+    "species": "dog",
+    "size": "medium",
+    "sex": "Fêmea",
+    "age": "Adulto",
+    "rescueDate": "2026-10-23",
+    "status": "in_treatment",
+    "urgent": false,
+    "location": "",
+    "summary": "Mãe de 9 filhotes, foi atropelada quando estava prestes a ser castrada. Quebrou a pata, passou por cirurgia e se recupera com uma gaiola nos ossos.",
+    "story": [
+      "Essa é a Lala 🐶💛 Quando chegou até nós, ela já era mamãe: tinha acabado de dar à luz 9 filhotes.",
+      "Ela foi socorrida e levada ao veterinário. O atropelamento quebrou os ossos da pata, e ela passou por uma cirurgia para colocar uma gaiola, que segura os ossos no lugar enquanto eles se recuperam. Hoje ela está em recuperação",
+      "Foram cirurgia, internação e remédios, qualquer valor ajuda 🙏",
+      "Quando estiver recuperada e castrada, a Lala vai procurar uma família para chamar de sua 🏡 Até lá, você pode ajudar com uma doação ou acompanhando a recuperação dela por aqui 🐾💛"
+    ],
+    "temperament": [],
+    "health": {
+      "neutered": false,
+      "vaccinated": false,
+      "dewormed": false,
+      "notes": ""
+    },
+    "goodWith": {
+      "children": "untested",
+      "dogs": "untested",
+      "cats": "untested"
+    },
+    "media": [
+      {
+        "type": "image",
+        "src": "https://cdn.sanity.io/images/wberp9dd/production/0d2fb890c2b77e0feb629fe2613382b63323f72f-888x639.jpg?w=1400&q=80&auto=format",
+        "thumbnail": "https://cdn.sanity.io/images/wberp9dd/production/0d2fb890c2b77e0feb629fe2613382b63323f72f-888x639.jpg?w=480&q=80&auto=format",
+        "focus": "50% 35%",
+        "alt": "Lala",
+        "caption": "",
+        "sensitive": false
+      },
+      {
+        "type": "video",
+        "src": "https://cdn.sanity.io/files/wberp9dd/production/e3e600f92762d6391143ce13504a49a5f185e43a.mp4",
+        "poster": "",
+        "thumbnail": "",
+        "focus": "50% 35%",
+        "alt": "Lala pós cirurgia",
+        "caption": "",
+        "sensitive": true
+      }
+    ]
   }
 ]

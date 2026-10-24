@@ -68,10 +68,11 @@ export const PIX = {
 
 // Suggested amounts and what each one pays for. Being concrete converts better
 // than asking for "any amount".
+// icon: "bowl" (ração), "vaccine" (vacina), "vet" (veterinário) or "heart".
 export const AMOUNTS = [
-  { amount: 30, covers: "um saco de ração para os filhotes" },
-  { amount: 90, covers: "a vacinação completa de um animal" },
-  { amount: 220, covers: "uma castração" },
+  { amount: 30, covers: "um saco de ração para os filhotes", icon: "bowl" },
+  { amount: 90, covers: "a vacinação completa de um animal", icon: "vaccine" },
+  { amount: 220, covers: "uma castração", icon: "vet" },
 ];
 
 // Turn on (true) while testing with a personal account or Mercado Pago test

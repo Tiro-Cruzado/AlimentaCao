@@ -118,7 +118,7 @@ const inlineCode = (t) => (
   </code>
 );
 
-export default function Sponsorship() {
+export default function Sponsorship({ switcher = null }) {
   const amounts = SPONSORSHIP.amounts;
   const { search } = useLocationParts();
   const [slug, setSlug] = useState(GROUPS[0]?.animals[0]?.slug);
@@ -232,6 +232,7 @@ export default function Sponsorship() {
           for adotado, a gente entra em contato para você decidir se continua
           com outro animal.
         </p>
+        {switcher}
       </div>
 
       <div style={card}>

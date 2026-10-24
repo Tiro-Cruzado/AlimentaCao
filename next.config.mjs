@@ -6,7 +6,10 @@ const nextConfig = {
   // is passed on here. It is read when the site is built: after changing it
   // on Vercel, redeploy.
   env: {
-    PIX_KEY: process.env.PIX_KEY || ""
+    PIX_KEY: process.env.PIX_KEY || "",
+    // Google Analytics measurement ID (G-XXXXXXXXXX). Empty = no Analytics
+    // and no cookie banner.
+    GA_ID: process.env.GA_ID || ""
   }
 };
 

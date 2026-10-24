@@ -26,7 +26,7 @@ export default function Header() {
         {FEATURES.donation ? (
           <a href="/#doar" className="header-cta" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 15, background: colors.greenDark, color: colors.card, padding: "10px 18px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}>Doar agora</a>
         ) : (
-          <a href={chatLink("Olá! Vi o site da AlimentaCão e quero falar com vocês.")} target="_blank" rel="noopener noreferrer" className="header-cta" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 15, background: colors.greenDark, color: colors.card, padding: "10px 18px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}>Fale com a gente</a>
+          <a href={chatLink("Olá! Vi o site da AlimentaCão e quero falar com vocês.")} data-track="fale_com_a_gente" target="_blank" rel="noopener noreferrer" className="header-cta" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 15, background: colors.greenDark, color: colors.card, padding: "10px 18px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}>Fale com a gente</a>
         )}
       </div>
     </header>

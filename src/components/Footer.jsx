@@ -1,6 +1,7 @@
 import Logo from "./Logo.jsx";
 import { instagramProfile } from "../data/social.js";
 import { FEATURES } from "../data/features.js";
+import { CookiePreferencesButton } from "./Analytics.jsx";
 import { CONTACT } from "../data/contact.js";
 
 function formatPhone(number) {
@@ -133,6 +134,7 @@ export default function Footer() {
             </a>
           )}
           <span style={{ color: "#5F6D6B" }}>Assis - SP</span>
+          <CookiePreferencesButton style={{ color: "#5F6D6B" }} />
         </div>
       </div>
     </footer>

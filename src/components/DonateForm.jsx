@@ -30,19 +30,68 @@ const inputStyle = {
   fontWeight: 600,
 };
 
-function optionStyle(active) {
+// Amount cards: icon + amount + what it pays for.
+function amountCardStyle(active) {
   return {
-    fontFamily: fonts.heading,
-    fontWeight: 700,
-    fontSize: 15,
-    textAlign: "center",
-    padding: "14px 8px",
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    width: "100%",
+    boxSizing: "border-box",
+    textAlign: "left",
+    padding: "13px 15px",
     borderRadius: 18,
     cursor: "pointer",
-    border: `1.5px solid ${active ? colors.green : colors.lineStrong}`,
-    background: active ? colors.greenLight : colors.background,
-    color: active ? "#34492A" : "#5A6A68",
+    border: `1.5px solid ${active ? colors.greenDark : colors.lineStrong}`,
+    background: active ? colors.greenLight : colors.card,
+    transition: "border-color .15s, background .15s",
   };
+}
+
+function amountIconStyle(active) {
+  return {
+    flex: "none",
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: active ? colors.greenDark : colors.amberLight,
+    color: active ? colors.card : "#8A5A12",
+    transition: "background .15s, color .15s",
+  };
+}
+
+// Line icons (24×24, stroke = currentColor). The key comes from `icon` in AMOUNTS.
+const ICON_PATHS = {
+  bowl: ["M4 11h16a8 8 0 0 1-16 0z", "M8 20h8", "M9 4c0 1.5 1 2 1 3.5", "M13 4c0 1.5 1 2 1 3.5"],
+  vaccine: ["M17 3l4 4", "M19 5l-4.5 4.5", "M11.5 6.5l6 6", "M16.5 11.5l-7 7h-3v-3l7-7", "M9 13l1.5 1.5", "M3 21l3.5-3.5"],
+  vet: ["M6 4H5a2 2 0 0 0-2 2v3.5a5.5 5.5 0 0 0 11 0V6a2 2 0 0 0-2-2h-1", "M8.5 15v1a5 5 0 0 0 10 0v-2", "M18.5 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"],
+  heart: ["M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6a5 5 0 1 1 7.5 6.6z"],
+};
+
+function AmountIcon({ name }) {
+  const paths = ICON_PATHS[name] || ICON_PATHS.heart;
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {paths.map((d) => <path key={d} d={d} />)}
+    </svg>
+  );
+}
+
+function AmountCard({ active, onClick, icon, title, detail }) {
+  return (
+    <button type="button" onClick={onClick} aria-pressed={active} style={amountCardStyle(active)}>
+      <span style={amountIconStyle(active)}>
+        <AmountIcon name={icon} />
+      </span>
+      <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <span style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 18.5, lineHeight: 1.2, color: colors.ink }}>{title}</span>
+        <span style={{ fontFamily: fonts.heading, fontWeight: 500, fontSize: 13.5, lineHeight: 1.35, color: colors.ink2 }}>{detail}</span>
+      </span>
+    </button>
+  );
 }
 
 function tabStyle(active) {
@@ -207,7 +256,7 @@ function DonationComingSoon() {
 
 // One-time donation: text on the left and a card with Pix / Card on the right.
 // The surrounding section (background, "Uma vez / Todo mês" selector) is Contribute.jsx.
-export default function DonateForm() {
+export default function DonateForm({ switcher = null }) {
   const [selected, setSelected] = useState(90); // number or "custom"
   const [typedAmount, setTypedAmount] = useState("");
   const [tab, setTab] = useState(FEATURES.pix ? "pix" : "mp");
@@ -322,41 +371,7 @@ export default function DonateForm() {
           Sem compromisso mensal. O valor vai para o gasto mais urgente da
           semana, que quase sempre é ração ou cirurgia.
         </p>
-        <ul
-          style={{
-            margin: "26px 0 0",
-            padding: 0,
-            listStyle: "none",
-            display: "flex",
-            flexDirection: "column",
-            gap: 12,
-          }}
-        >
-          {AMOUNTS.map((v) => (
-            <li
-              key={v.amount}
-              style={{
-                fontSize: 16,
-                color: colors.ink2,
-                display: "flex",
-                gap: 12,
-                alignItems: "flex-start",
-              }}
-            >
-              <span
-                style={{
-                  width: 9,
-                  height: 9,
-                  borderRadius: "50%",
-                  background: colors.amber,
-                  marginTop: 8,
-                  flex: "none",
-                }}
-              />
-              R$ {v.amount} — {v.covers}
-            </li>
-          ))}
-        </ul>
+        {switcher}
       </div>
 
       <div style={card}>
@@ -412,29 +427,27 @@ export default function DonateForm() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(90px,1fr))",
+            gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,190px),1fr))",
             gap: 10,
           }}
         >
           {AMOUNTS.map((v) => (
-            <button
+            <AmountCard
               key={v.amount}
-              type="button"
+              active={selected === v.amount}
               onClick={() => chooseAmount(v.amount)}
-              aria-pressed={selected === v.amount}
-              style={optionStyle(selected === v.amount)}
-            >
-              R$ {v.amount}
-            </button>
+              icon={v.icon}
+              title={`R$ ${v.amount}`}
+              detail={v.covers}
+            />
           ))}
-          <button
-            type="button"
+          <AmountCard
+            active={selected === "custom"}
             onClick={() => chooseAmount("custom")}
-            aria-pressed={selected === "custom"}
-            style={optionStyle(selected === "custom")}
-          >
-            Outro
-          </button>
+            icon="heart"
+            title="Outro valor"
+            detail="você escolhe quanto"
+          />
         </div>
 
         {selected === "custom" && (
@@ -567,6 +580,8 @@ export default function DonateForm() {
                 type="button"
                 disabled={chosenAmount <= 0}
                 onClick={() => setQrAmount(chosenAmount)}
+                data-track="pix_gerar_qr"
+                data-track-value={chosenAmount > 0 ? chosenAmount : undefined}
                 style={primaryButton(chosenAmount > 0)}
               >
                 {chosenAmount > 0
@@ -711,6 +726,8 @@ export default function DonateForm() {
                 type="button"
                 disabled={!canPayByCard}
                 onClick={payByCard}
+                data-track="cartao_pagar"
+                data-track-value={chosenAmount > 0 ? chosenAmount : undefined}
                 style={primaryButton(
                   canPayByCard,
                   colors.amber,
@@ -786,6 +803,8 @@ export default function DonateForm() {
             </p>
             <a
               href={noticeLink}
+              data-track="avisar_doacao"
+              data-track-value={chosenAmount > 0 ? chosenAmount : undefined}
               style={{
                 display: "inline-block",
                 fontFamily: fonts.heading,

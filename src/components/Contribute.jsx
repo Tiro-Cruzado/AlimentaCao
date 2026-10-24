@@ -46,13 +46,12 @@ export default function Contribute() {
     if (fromLink) setMode(fromLink);
   }, [hash, search]);
 
-  return (
-    <section id="doar" style={{ position: "relative", background: colors.background, borderBottom: `1px solid ${colors.line}`, padding: "clamp(60px,9vw,104px) 0" }}>
-      {/* Sponsorship anchor: same section, the selector does the rest. */}
-      <span id="apadrinhar" aria-hidden="true" style={{ position: "absolute", top: 0 }} />
-
-      <div style={{ maxWidth: maxWidth, margin: "0 auto", padding: gutter }}>
-        <p id="contribute-label" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: colors.greenDark, margin: "0 0 12px" }}>
+  // Selector between "Uma vez" and "Todo mês". It sits right under the title
+  // and text of each mode (passed to DonateForm / Sponsorship), next to what it
+  // changes, instead of floating alone above the two columns.
+  const switcher = (
+    <div style={{ marginTop: "clamp(22px,3vw,30px)" }}>
+        <p id="contribute-label" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: colors.greenDark, margin: "0 0 10px" }}>
           Como você quer ajudar?
         </p>
         <div
@@ -91,14 +90,22 @@ export default function Contribute() {
             );
           })}
         </div>
+    </div>
+  );
 
+  return (
+    <section id="doar" style={{ position: "relative", background: colors.background, borderBottom: `1px solid ${colors.line}`, padding: "clamp(60px,9vw,104px) 0" }}>
+      {/* Sponsorship anchor: same section, the selector does the rest. */}
+      <span id="apadrinhar" aria-hidden="true" style={{ position: "absolute", top: 0 }} />
+
+      <div style={{ maxWidth: maxWidth, margin: "0 auto", padding: gutter }}>
         <div
           id="contribute-panel"
           role="tabpanel"
           aria-labelledby={`tab-${mode}`}
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(32px,5vw,56px)", alignItems: "center", marginTop: "clamp(28px,4vw,44px)" }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(32px,5vw,56px)", alignItems: "start" }}
         >
-          {mode === "monthly" ? <Sponsorship /> : <DonateForm />}
+          {mode === "monthly" ? <Sponsorship switcher={switcher} /> : <DonateForm switcher={switcher} />}
         </div>
       </div>
     </section>

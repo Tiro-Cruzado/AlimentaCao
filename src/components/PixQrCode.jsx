@@ -101,6 +101,7 @@ export default function PixQrCode({ code, amount }) {
         <button
           type="button"
           onClick={copy}
+          data-track="pix_copiar"
           style={{ boxSizing: "border-box", width: "100%", marginTop: 10, fontFamily: fonts.heading, fontWeight: 700, fontSize: 15.5, background: colors.greenDark, color: colors.card, border: "none", padding: "14px 20px", borderRadius: 999, cursor: "pointer" }}
         >
           {copied ? "Código copiado" : "Copiar código Pix"}

@@ -15,6 +15,9 @@ import { colors, fonts } from "../theme.js";
 import { FEATURES } from "../data/features.js";
 import { ComingSoonBadge } from "./ComingSoon.jsx";
 import { card } from "./cardStyle.js";
+import { coverPhoto } from "../data/animals.js";
+import { DONATABLE, findDonatable, donatableLabel, pixDescription, pixTxid } from "../lib/donation.js";
+import { useLocationParts } from "../lib/useLocationParts.js";
 
 const inputStyle = {
   width: "100%",
@@ -254,9 +257,65 @@ function DonationComingSoon() {
   );
 }
 
+// "Para quem é a doação?": general (the most urgent need) or one animal. The
+// chosen animal goes in the Pix description, in the "Avisar que doei" message
+// and in the card payment.
+function ForAnimal({ value, animal, onChange }) {
+  const photo = animal ? coverPhoto(animal) : null;
+  return (
+    <div>
+      <label
+        htmlFor="donation-animal"
+        style={{ display: "block", fontFamily: fonts.heading, fontWeight: 700, fontSize: 24, color: colors.ink, marginBottom: 12 }}
+      >
+        Para quem é a doação?
+      </label>
+      <div style={{ position: "relative" }}>
+        <select
+          id="donation-animal"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          style={{ ...inputStyle, appearance: "none", WebkitAppearance: "none", paddingRight: 44, cursor: "pointer" }}
+        >
+          <option value="">Onde for mais urgente</option>
+          {DONATABLE.map((a) => (
+            <option key={a.slug} value={a.slug}>
+              {donatableLabel(a)}
+            </option>
+          ))}
+        </select>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.ink3} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ position: "absolute", right: 18, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12 }}>
+        {animal &&
+          (photo ? (
+            <img
+              src={photo.thumbnail || photo.src}
+              alt=""
+              onError={(e) => { e.currentTarget.style.display = "none"; }}
+              style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", objectPosition: photo.focus, flex: "none", background: colors.backgroundAlt }}
+            />
+          ) : null)}
+        <p style={{ fontSize: 14, lineHeight: 1.5, color: colors.ink2, margin: 0 }}>
+          {animal ? (
+            <>
+              A doação vai para os cuidados {animal.sex === "Fêmea" ? "da" : "do"} {animal.name}.{" "}
+              <a href={`/animal/${animal.slug}`} style={{ color: colors.greenDark, fontWeight: 600 }}>Ver a história</a>
+            </>
+          ) : (
+            "Vai para o gasto mais urgente da semana, que quase sempre é ração ou cirurgia."
+          )}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // One-time donation: text on the left and a card with Pix / Card on the right.
 // The surrounding section (background, "Uma vez / Todo mês" selector) is Contribute.jsx.
-export default function DonateForm({ switcher = null }) {
+export default function DonateForm({ switcher = null, centered = false }) {
   const [selected, setSelected] = useState(90); // number or "custom"
   const [typedAmount, setTypedAmount] = useState("");
   const [tab, setTab] = useState(FEATURES.pix ? "pix" : "mp");
@@ -265,6 +324,17 @@ export default function DonateForm({ switcher = null }) {
   const [submitting, setSubmitting] = useState(false);
   const [cardError, setCardError] = useState("");
   const [returnStatus, setReturnStatus] = useState(null);
+  // Animal the donation is for ("" = wherever it is most urgent).
+  const [forSlug, setForSlug] = useState("");
+  const forAnimal = findDonatable(forSlug);
+  const { search } = useLocationParts();
+
+  // /?doar=lala#doar ("Ajudar com uma doação" on the animal's page) opens with
+  // that animal already chosen.
+  useEffect(() => {
+    const requested = new URLSearchParams(search).get("doar");
+    if (requested && findDonatable(requested)) setForSlug(requested);
+  }, [search]);
 
   // Back from Mercado Pago: /?pagamento=aprovado#doar
   useEffect(() => {
@@ -293,8 +363,8 @@ export default function DonateForm({ switcher = null }) {
         name: PIX.recipientName,
         city: PIX.city,
         amount: qrAmount,
-        txid: `DOACAO${qrAmount}`,
-        description: PIX.description,
+        txid: pixTxid(qrAmount, forAnimal),
+        description: pixDescription(forAnimal, PIX.description),
       })
     : "";
 
@@ -318,7 +388,7 @@ export default function DonateForm({ switcher = null }) {
       const r = await fetch("/api/doacao", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ amount: chosenAmount, coverFee }),
+        body: JSON.stringify({ amount: chosenAmount, coverFee, animal: forAnimal?.slug }),
       });
       const data = await r.json().catch(() => ({}));
       if (!r.ok || !data.url)
@@ -337,14 +407,14 @@ export default function DonateForm({ switcher = null }) {
     if (v !== "custom") setTypedAmount("");
   }
 
-  const donationNotice = `Olá! Acabei de doar para a AlimentaCão${chosenAmount > 0 ? ` (R$ ${chosenAmount})` : ""}. Meu nome é `;
+  const donationNotice = `Olá! Acabei de doar para ${forAnimal ? `${forAnimal.sex === "Fêmea" ? "a" : "o"} ${forAnimal.name}` : "a AlimentaCão"}${chosenAmount > 0 ? ` (R$ ${chosenAmount})` : ""}. Meu nome é `;
   const noticeLink = CONTACT.whatsapp
     ? `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(donationNotice)}`
     : `mailto:${CONTACT.email}?subject=${encodeURIComponent("Acabei de doar")}&body=${encodeURIComponent(donationNotice)}`;
 
   return (
     <>
-      <div>
+      <div style={centered ? { textAlign: "center", maxWidth: 620 } : undefined}>
         <h2
           style={{
             fontFamily: fonts.heading,
@@ -364,17 +434,17 @@ export default function DonateForm({ switcher = null }) {
             fontSize: "clamp(16px,2vw,18px)",
             lineHeight: 1.65,
             color: colors.ink2,
-            margin: "18px 0 0",
+            margin: centered ? "14px auto 0" : "18px 0 0",
             maxWidth: "32em",
           }}
         >
-          Sem compromisso mensal. O valor vai para o gasto mais urgente da
-          semana, que quase sempre é ração ou cirurgia.
+          Sem compromisso mensal. Escolha um animal para ajudar ou deixe a
+          gente decidir onde é mais urgente.
         </p>
         {switcher}
       </div>
 
-      <div style={card}>
+      <div style={centered ? { ...card, width: "100%", maxWidth: 620, boxSizing: "border-box" } : card}>
         {NO_PAYMENT ? (
           <DonationComingSoon />
         ) : (
@@ -410,6 +480,10 @@ export default function DonateForm({ switcher = null }) {
               {RETURN_STATUS[returnStatus].text}
             </p>
           </div>
+        )}
+
+        {DONATABLE.length > 0 && (
+          <ForAnimal value={forSlug} animal={forAnimal} onChange={setForSlug} />
         )}
 
         <h3
@@ -482,42 +556,46 @@ export default function DonateForm({ switcher = null }) {
           </div>
         )}
 
-        <div
-          role="tablist"
-          aria-label="Como doar"
-          style={{
-            display: "flex",
-            gap: 6,
-            background: colors.backgroundAlt,
-            padding: 5,
-            borderRadius: 18,
-          }}
-        >
-          <button
-            role="tab"
-            aria-selected={tab === "pix"}
-            type="button"
-            disabled={!FEATURES.pix}
-            title={FEATURES.pix ? undefined : "Pix em breve"}
-            onClick={() => FEATURES.pix && setTab("pix")}
-            style={{ ...tabStyle(tab === "pix"), display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, cursor: FEATURES.pix ? "pointer" : "not-allowed" }}
+        {/* The Pix / Cartão choice only shows when both are enabled. While the
+            card is off, the form goes straight to Pix. */}
+        {FEATURES.pix && MERCADO_PAGO.cardEnabled && (
+          <div
+            role="tablist"
+            aria-label="Como doar"
+            style={{
+              display: "flex",
+              gap: 6,
+              background: colors.backgroundAlt,
+              padding: 5,
+              borderRadius: 18,
+            }}
           >
-            Pix
-            {!FEATURES.pix && <ComingSoonBadge small />}
-          </button>
-          <button
-            role="tab"
-            aria-selected={tab === "mp"}
-            type="button"
-            disabled={!MERCADO_PAGO.cardEnabled}
-            title={MERCADO_PAGO.cardEnabled ? undefined : "Cartão em breve"}
-            onClick={() => MERCADO_PAGO.cardEnabled && setTab("mp")}
-            style={{ ...tabStyle(tab === "mp"), display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, cursor: MERCADO_PAGO.cardEnabled ? "pointer" : "not-allowed" }}
-          >
-            Cartão
-            {!MERCADO_PAGO.cardEnabled && <ComingSoonBadge small />}
-          </button>
-        </div>
+            <button
+              role="tab"
+              aria-selected={tab === "pix"}
+              type="button"
+              disabled={!FEATURES.pix}
+              title={FEATURES.pix ? undefined : "Pix em breve"}
+              onClick={() => FEATURES.pix && setTab("pix")}
+              style={{ ...tabStyle(tab === "pix"), display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, cursor: FEATURES.pix ? "pointer" : "not-allowed" }}
+            >
+              Pix
+              {!FEATURES.pix && <ComingSoonBadge small />}
+            </button>
+            <button
+              role="tab"
+              aria-selected={tab === "mp"}
+              type="button"
+              disabled={!MERCADO_PAGO.cardEnabled}
+              title={MERCADO_PAGO.cardEnabled ? undefined : "Cartão em breve"}
+              onClick={() => MERCADO_PAGO.cardEnabled && setTab("mp")}
+              style={{ ...tabStyle(tab === "mp"), display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, cursor: MERCADO_PAGO.cardEnabled ? "pointer" : "not-allowed" }}
+            >
+              Cartão
+              {!MERCADO_PAGO.cardEnabled && <ComingSoonBadge small />}
+            </button>
+          </div>
+        )}
 
         {tab === "pix" &&
           FEATURES.pix &&

@@ -1,19 +1,13 @@
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import Analytics from "../components/Analytics.jsx";
-import { SITE, toNextMetadata } from "../lib/metadata.js";
+import { SITE, SITE_ORIGIN, toNextMetadata, organizationJsonLd } from "../lib/metadata.js";
 import "../styles.css";
 
 // Frame of every page: fonts, header and footer.
 
-// Public address of the site, used in the sharing links. On Vercel,
-// set SITE_URL; without it, the address Vercel itself reports is used.
-const origin =
-  process.env.SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
-
 export const metadata = {
-  metadataBase: new URL(origin),
+  metadataBase: new URL(SITE_ORIGIN),
   ...toNextMetadata({ title: SITE.title, description: SITE.description }),
   icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" }
 };
@@ -32,6 +26,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()).replace(/</g, "\\u003c") }}
+        />
         {/* "clip" instead of "hidden": hidden would break the position: sticky of the opening. */}
         <div style={{ overflowX: "clip" }}>
           <Header />

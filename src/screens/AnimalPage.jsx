@@ -7,6 +7,7 @@ import { adoptionLink } from "../data/contact.js";
 import { useGallery, GalleryCover, GalleryGrid, Fullscreen } from "../components/MediaGallery.jsx";
 import { colors, fonts, maxWidth, gutter } from "../theme.js";
 import { useMounted } from "../lib/useMounted.js";
+import ShareButtons from "../components/ShareButtons.jsx";
 
 function Tag({ children, background, ink }) {
   return (
@@ -188,7 +189,7 @@ export default function AnimalPage({ slug }) {
                   </a>
                 ) : FEATURES.donation ? (
                   <a
-                    href="/#doar"
+                    href={`/?doar=${animal.slug}#doar`}
                     data-track="ajudar_animal"
                     data-track-label={animal.name}
                     style={{ display: "block", textAlign: "center", fontFamily: fonts.heading, fontWeight: 700, fontSize: 15, background: colors.card, color: colors.greenDark, border: `1.5px solid ${colors.lineStrong}`, padding: "13px 20px", borderRadius: 999, textDecoration: "none" }}
@@ -201,6 +202,7 @@ export default function AnimalPage({ slug }) {
                 </p>
               </div>
             )}
+            <ShareButtons animal={animal} />
           </aside>
         </div>
       </div>

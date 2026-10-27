@@ -13,13 +13,15 @@ export default function Hero() {
           padding: "clamp(56px,10vw,104px) clamp(18px,5vw,32px) clamp(44px,7vw,72px)"
         }}
       >
-        <span className="hero-badge" style={{ display: "inline-block", fontFamily: fonts.heading, fontWeight: 600, fontSize: 13, letterSpacing: "0.14em", textTransform: "uppercase", color: colors.greenDark, background: colors.greenLight, padding: "8px 16px", borderRadius: 999 }}>
+        {/* The h1 is the line with what people search on Google ("ONG", "animal",
+            "Assis"). The slogan below keeps the big look, as a paragraph. */}
+        <h1 className="hero-badge" style={{ display: "inline-block", margin: 0, lineHeight: "inherit", fontFamily: fonts.heading, fontWeight: 600, fontSize: 13, letterSpacing: "0.14em", textTransform: "uppercase", color: colors.greenDark, background: colors.greenLight, padding: "8px 16px", borderRadius: 999 }}>
           ONG de resgate animal · Assis - SP
-        </span>
-
-        <h1 className="hero-title" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: "clamp(38px,7vw,68px)", lineHeight: 1.04, letterSpacing: "-0.025em", margin: "24px 0 0", maxWidth: "11em", textWrap: "balance" }}>
-          Um prato cheio e um lar à vista.
         </h1>
+
+        <p className="hero-title" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: "clamp(38px,7vw,68px)", lineHeight: 1.04, letterSpacing: "-0.025em", margin: "24px 0 0", maxWidth: "11em", textWrap: "balance" }}>
+          Um prato cheio e um lar à vista.
+        </p>
 
         <p className="hero-text" style={{ fontSize: "clamp(17px,2.2vw,20px)", lineHeight: 1.6, margin: "24px 0 0", maxWidth: "30em" }}>
           A AlimentaCão cuida de cães e gatos resgatados das ruas de Assis, no interior de São Paulo, até que encontrem uma família. Enquanto isso, cada doação vira ração, vacina e veterinário para um animal com nome e história.

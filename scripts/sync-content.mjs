@@ -79,6 +79,20 @@ const WALL_QUERY = `*[_type == "wallPost" && defined(date)] | order(date desc) {
   media[]{ _type, alt, caption, asset, crop, hotspot, poster, sensitive }
 }`;
 
+// Photo cut to an exact size, following the hotspot/crop set in the Studio.
+// JPG on purpose: the share images are drawn on the server, which does not
+// read WebP/AVIF.
+const croppedJpg = (img, width, height) =>
+  img?.asset ? builder.image(img).width(width).height(height).fit("crop").format("jpg").quality(82).url() : "";
+
+// Photo for the share card (src/app/animal/[slug]/opengraph-image.jsx): the
+// cover photo (first non-sensitive one), cut to the card's size.
+function sharePhotos(media) {
+  const cover = (media || []).find((m) => m._type !== "video" && m.asset && !m.sensitive);
+  if (!cover) return undefined;
+  return { card: croppedJpg(cover, 640, 630) };
+}
+
 function paragraphs(text) {
   return String(text || "")
     .split(/\n\s*\n/)
@@ -168,7 +182,8 @@ async function syncOnce() {
       dogs: a.goodWith?.dogs || "untested",
       cats: a.goodWith?.cats || "untested"
     },
-    media: convertMedia(a.media, fileUrls)
+    media: convertMedia(a.media, fileUrls),
+    share: sharePhotos(a.media)
   }));
 
   const wallOutput = wall.map((p) => ({

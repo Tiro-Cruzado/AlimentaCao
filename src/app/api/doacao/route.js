@@ -3,7 +3,7 @@
 // Next server route (runs on Vercel as a function). It exists only because the
 // API token is a secret and cannot go to the browser.
 //
-// The browser sends only { amount, coverFee }. The total is RECALCULATED here:
+// The browser sends only { amount, coverFee, animal? }. The total is RECALCULATED here:
 // if it came ready from the screen, anyone could send "R$ 0,01".
 //
 // Configuration (Vercel → Settings → Environment Variables):
@@ -13,6 +13,7 @@
 //
 // Locally: create .env.local with MP_ACCESS_TOKEN=... and run `npm run dev`.
 
+import { findDonatable } from "../../../lib/donation.js";
 import { calculateCard, validateAmount, toCents } from "../../../lib/fee.js";
 
 const MP_API = "https://api.mercadopago.com/checkout/preferences";
@@ -45,6 +46,8 @@ export async function POST(request) {
   }
 
   const coverFee = data?.coverFee !== false;
+  // Optional: donation earmarked for one animal. Only known slugs are accepted.
+  const animal = findDonatable(String(data?.animal || ""));
   const breakdown = calculateCard(amount, coverFee);
   const origin = new URL(request.url).origin;
   const backUrl = (status) => `${origin}/?pagamento=${status}#doar`;
@@ -53,7 +56,7 @@ export async function POST(request) {
     items: [
       {
         id: "donation",
-        title: "Doação para a AlimentaCão",
+        title: animal ? `Doação para ${animal.name} · AlimentaCão` : "Doação para a AlimentaCão",
         description: coverFee
           ? `Doação de ${breakdown.amount.toFixed(2)} + taxa do cartão ${breakdown.fee.toFixed(2)}`
           : `Doação de ${breakdown.amount.toFixed(2)}`,
@@ -72,12 +75,13 @@ export async function POST(request) {
     },
     back_urls: { success: backUrl("aprovado"), pending: backUrl("pendente"), failure: backUrl("falhou") },
     statement_descriptor: "ALIMENTACAO",
-    external_reference: `donation-${toCents(breakdown.amount)}-${coverFee ? "with-fee" : "no-fee"}-${Date.now()}`,
+    external_reference: `donation-${animal ? `${animal.slug}-` : ""}${toCents(breakdown.amount)}-${coverFee ? "with-fee" : "no-fee"}-${Date.now()}`,
     metadata: {
       type: "one_time_donation",
       donation_amount: breakdown.amount,
       fee_covered_by_donor: coverFee,
-      fee: breakdown.fee
+      fee: breakdown.fee,
+      animal: animal?.slug || null
     }
   };
   // Mercado Pago only returns to the site by itself (auto_return) with an https address.

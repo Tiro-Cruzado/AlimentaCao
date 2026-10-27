@@ -7,7 +7,7 @@
     "sex": "Fêmea",
     "age": "Adulto",
     "rescueDate": "2026-10-21",
-    "status": "in_treatment",
+    "status": "available",
     "urgent": false,
     "location": "",
     "summary": "Resgatada de um saco de lixo, cheia de medo, a Vitória provou que quer viver! Hoje está a recuperar e precisa de ajuda médica para encontrar o seu final feliz. Toda a vida importa!",
@@ -58,7 +58,11 @@
         "caption": "",
         "sensitive": false
       }
-    ]
+    ],
+    "share": {
+      "card": "https://cdn.sanity.io/images/wberp9dd/production/cfb450d78d9c857006d97ae016b5cf55d7adb537-960x1280.jpg?rect=65,0,830,817&w=640&h=630&fm=jpg&q=82&fit=crop",
+      "story": "https://cdn.sanity.io/images/wberp9dd/production/cfb450d78d9c857006d97ae016b5cf55d7adb537-960x1280.jpg?rect=106,0,748,817&w=1080&h=1180&fm=jpg&q=82&fit=crop"
+    }
   },
   {
     "slug": "lala",
@@ -119,6 +123,10 @@
         "caption": "",
         "sensitive": true
       }
-    ]
+    ],
+    "share": {
+      "card": "https://cdn.sanity.io/images/wberp9dd/production/0d2fb890c2b77e0feb629fe2613382b63323f72f-888x639.jpg?rect=120,0,649,639&w=640&h=630&fm=jpg&q=82&fit=crop",
+      "story": "https://cdn.sanity.io/images/wberp9dd/production/0d2fb890c2b77e0feb629fe2613382b63323f72f-888x639.jpg?rect=152,0,585,639&w=1080&h=1180&fm=jpg&q=82&fit=crop"
+    }
   }
 ]

@@ -19,6 +19,9 @@ import { ComingSoonBadge } from "./ComingSoon.jsx";
 const ENABLED = { once: FEATURES.donation, monthly: FEATURES.sponsorship };
 // Tab that opens first: the one-time donation, or the monthly one if only it is enabled.
 const DEFAULT_MODE = ENABLED.once ? "once" : "monthly";
+// "Uma vez / Todo mês" only shows when both exist. While sponsorship is off,
+// the section is just the one-time donation, with no "Em breve" tab.
+const BOTH_ENABLED = ENABLED.once && ENABLED.monthly;
 
 const OPTIONS = [
   { value: "once", label: "Uma vez", comingSoon: !ENABLED.once },
@@ -103,9 +106,14 @@ export default function Contribute() {
           id="contribute-panel"
           role="tabpanel"
           aria-labelledby={`tab-${mode}`}
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(32px,5vw,56px)", alignItems: "start" }}
+          style={
+            BOTH_ENABLED
+              ? { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(32px,5vw,56px)", alignItems: "start" }
+              : // Only the one-time donation: title, text and form in one centred column.
+                { display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(28px,4vw,40px)" }
+          }
         >
-          {mode === "monthly" ? <Sponsorship switcher={switcher} /> : <DonateForm switcher={switcher} />}
+          {mode === "monthly" ? <Sponsorship switcher={BOTH_ENABLED ? switcher : null} /> : <DonateForm switcher={BOTH_ENABLED ? switcher : null} centered={!BOTH_ENABLED} />}
         </div>
       </div>
     </section>

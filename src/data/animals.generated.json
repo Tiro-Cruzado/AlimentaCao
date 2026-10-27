@@ -62,7 +62,7 @@
   },
   {
     "slug": "lala",
-    "name": "Lala",
+    "name": "Lalá",
     "species": "dog",
     "size": "medium",
     "sex": "Fêmea",
@@ -73,10 +73,10 @@
     "location": "",
     "summary": "Mãe de 9 filhotes, foi atropelada quando estava prestes a ser castrada. Quebrou a pata, passou por cirurgia e se recupera com uma gaiola nos ossos.",
     "story": [
-      "Essa é a Lala 🐶💛 Quando chegou até nós, ela já era mamãe: tinha acabado de dar à luz 9 filhotes.",
+      "Essa é a Lalá 🐶💛 Quando chegou até nós, ela já era mamãe: tinha acabado de dar à luz 9 filhotes.",
       "Ela foi socorrida e levada ao veterinário. O atropelamento quebrou os ossos da pata, e ela passou por uma cirurgia para colocar uma gaiola, que segura os ossos no lugar enquanto eles se recuperam. Hoje ela está em recuperação",
       "Foram cirurgia, internação e remédios, qualquer valor ajuda 🙏",
-      "Quando estiver recuperada e castrada, a Lala vai procurar uma família para chamar de sua 🏡 Até lá, você pode ajudar com uma doação ou acompanhando a recuperação dela por aqui 🐾💛"
+      "Quando estiver recuperada e castrada, a Lalá vai procurar uma família para chamar de sua 🏡 Até lá, você pode ajudar com uma doação ou acompanhando a recuperação dela por aqui 🐾💛"
     ],
     "temperament": [],
     "health": {
@@ -107,6 +107,15 @@
         "thumbnail": "",
         "focus": "50% 35%",
         "alt": "Lala pós cirurgia",
+        "caption": "",
+        "sensitive": true
+      },
+      {
+        "type": "image",
+        "src": "https://cdn.sanity.io/images/wberp9dd/production/a2803f41b1b12da2ca0a7afe1b90b953270a027e-1204x1600.jpg?w=1400&q=80&auto=format",
+        "thumbnail": "https://cdn.sanity.io/images/wberp9dd/production/a2803f41b1b12da2ca0a7afe1b90b953270a027e-1204x1600.jpg?w=480&q=80&auto=format",
+        "focus": "50% 35%",
+        "alt": "Lala antes do tratamento pós acidente",
         "caption": "",
         "sensitive": true
       }

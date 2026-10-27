@@ -1,3 +1,7 @@
+// Address of the admin panel, hosted by Sanity (`studioHost` in
+// studio/sanity.cli.js). /studio on the site just sends the person there.
+const STUDIO_URL = "https://alimentacao.sanity.studio";
+
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -10,6 +14,12 @@ const nextConfig = {
     // Google Analytics measurement ID (G-XXXXXXXXXX). Empty = no Analytics
     // and no cookie banner.
     GA_ID: process.env.GA_ID || ""
+  },
+  async redirects() {
+    return [
+      { source: "/studio", destination: STUDIO_URL, permanent: false },
+      { source: "/studio/:path*", destination: `${STUDIO_URL}/:path*`, permanent: false }
+    ];
   }
 };
 

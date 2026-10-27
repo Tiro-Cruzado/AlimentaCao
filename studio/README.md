@@ -42,7 +42,7 @@ SANITY_STUDIO_PROJECT_ID=your-project-id
 SANITY_STUDIO_DATASET=production
 ```
 
-`sanity.config.js` and `sanity.cli.js` both read those two variables.
+`sanity.config.js` and `sanity.cli.ts` both read those two variables (and fall back to `wberp9dd` / `production`).
 
 ## Run the panel locally
 

@@ -8,10 +8,9 @@ import wallPost from "./schemas/wallPost.js";
 export default defineConfig({
   name: "alimentacao",
   title: "AlimentaCão",
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || "PASTE_THE_PROJECT_ID_HERE",
+  // The project id is not a secret: it is public in every image URL.
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || "wberp9dd",
   dataset: process.env.SANITY_STUDIO_DATASET || "production",
-  // The studio is served from /studio on the same domain (see vercel.json).
-  basePath: "/studio",
   plugins: [structureTool()],
   schema: { types: [animal, wallPost] }
 });

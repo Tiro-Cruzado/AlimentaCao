@@ -336,32 +336,29 @@ input:focus-visible {
   }
 }
 
-/* Opening: dog photo pinned in the background (sticky), with the title and the cards
-   passing over it. The JS in Opening.jsx only adjusts --exit (0 → 1) following the
-   scroll: the title fades out, the veil darkens and the cards come in. Without JS, everything
-   shows up static and readable. */
+/* Opening: green panel with the text on the left, photos on the right (on
+   the phone, photo on top and panel below), separated by a soft curve with a
+   dark outline. The photos fade from one to the other (carousel, Opening.jsx). */
 .opening {
+  background: #FBF8F4;
+}
+
+.hero-split {
   position: relative;
-  background: #2A2724;
-}
-
-/* The track fills the whole opening; the layer inside it is what sticks to the top.
-   This way the photo stays still while scrolling, but never goes past the end of the section. */
-.opening-track {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.opening-backdrop {
-  position: sticky;
-  top: 0;
-  /* lvh = the screen height with the browser bar hidden. With svh, on mobile the
-     photo was sized for the screen WITH the bar, and once the bar hid on scroll a
-     dark band showed below it. */
-  height: 100vh;
-  height: 100lvh;
+  display: flex;
+  min-height: clamp(560px, calc(100vh - 66px), 820px);
+  min-height: clamp(560px, calc(100svh - 66px), 820px);
+  background: #467333;
   overflow: hidden;
+}
+
+.hero-photos {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background: #34492A;
 }
 
 .opening-photo {
@@ -370,50 +367,167 @@ input:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 72% 40%;
-  transform: scale(calc(1 + var(--exit, 0) * 0.06));
-  transform-origin: 70% 40%;
+  object-position: var(--focus-desktop, 50% 40%);
+  /* Carousel: every photo stacked; only the current one is visible. */
+  opacity: 0;
+  transition: opacity 1.4s ease;
 }
 
-/* Fixed veil: darkens the text side. */
-.opening-backdrop::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(90deg, rgba(24, 22, 20, 0.86) 0%, rgba(24, 22, 20, 0.62) 42%, rgba(24, 22, 20, 0.08) 72%, rgba(24, 22, 20, 0) 100%);
+.opening-photo.is-current {
+  opacity: 1;
 }
 
-/* Veil that grows with the scroll, so the white cards do not fight with the photo. */
-.opening-backdrop::after {
-  content: "";
+/* The curve between panel and photo. It is drawn stretched to the height of
+   the section; the outline keeps its thickness (vector-effect in the SVG). */
+.hero-edge {
   position: absolute;
-  inset: 0;
   z-index: 1;
-  background: rgba(24, 22, 20, 0.5);
-  opacity: var(--exit, 0);
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hero-edge-desktop {
+  top: 0;
+  left: calc(50% - 46px);
+  width: 170px;
+  height: 100%;
+}
+
+.hero-edge-mobile {
+  display: none;
 }
 
 .hero-content {
   position: relative;
-  z-index: 1;
-  min-height: calc(100vh - 66px);
-  min-height: calc(100svh - 66px);
+  z-index: 2;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  opacity: calc(1 - var(--exit, 0) * 1.3);
-  transform: translateY(calc(var(--exit, 0) * -48px));
+  box-sizing: border-box;
 }
 
 .hero-title {
   color: #FFFDFB;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.25);
 }
 
 .hero-text {
-  color: rgba(255, 253, 251, 0.9);
+  color: rgba(255, 253, 251, 0.88);
+}
+
+/* The phrase keeps room for two lines, so the text below does not jump
+   when a shorter phrase comes in. */
+.hero-phrase {
+  min-height: 2.08em;
+  animation: hero-phrase-in 0.9s ease both;
+}
+
+@keyframes hero-phrase-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero-cta-primary,
+.hero-cta-secondary {
+  font-family: Quicksand, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.hero-cta-primary {
+  background: #FFFDFB;
+  color: #467333;
+}
+
+.hero-cta-secondary {
+  color: #FFFDFB;
+  border: 1.5px solid rgba(255, 253, 251, 0.6);
+}
+
+.hero-cta-secondary:hover {
+  background: rgba(255, 253, 251, 0.1);
+}
+
+.hero-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 253, 251, 0.45);
+  cursor: pointer;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.hero-dot.is-current {
+  width: 28px;
+  background: #FFFDFB;
+}
+
+.hero-round {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1.5px solid rgba(255, 253, 251, 0.55);
+  border-radius: 999px;
+  background: transparent;
+  color: #FFFDFB;
+  cursor: pointer;
+}
+
+.hero-round:hover {
+  background: rgba(255, 253, 251, 0.12);
+}
+
+.hero-dot:focus-visible,
+.hero-round:focus-visible,
+.hero-cta-primary:focus-visible,
+.hero-cta-secondary:focus-visible {
+  outline: 2px solid #FFFDFB;
+  outline-offset: 3px;
+}
+
+/* Phone: photo on top, wavy edge, green panel below with tag, phrase and
+   buttons (the long paragraph is left out to keep the photo visible). */
+@media (max-width: 760px) {
+  .hero-split {
+    flex-direction: column;
+    min-height: 0;
+  }
+  .hero-photos {
+    position: relative;
+    width: 100%;
+    height: clamp(260px, 46vh, 460px);
+    height: clamp(260px, 46svh, 460px);
+  }
+  .opening-photo {
+    object-position: var(--focus-mobile, 50% 35%);
+  }
+  .hero-edge-desktop {
+    display: none;
+  }
+  .hero-edge-mobile {
+    display: block;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    top: calc(clamp(260px, 46vh, 460px) - 44px);
+    top: calc(clamp(260px, 46svh, 460px) - 44px);
+  }
+  .hero-content {
+    width: 100%;
+    padding: 22px 20px 44px !important;
+  }
+  .hero-text {
+    display: none;
+  }
 }
 
 /* "How to help" cards: 4 columns, 2 on medium screens, 1 on mobile — never
@@ -454,39 +568,9 @@ input:focus-visible {
   transform: none;
 }
 
-/* Mobile: the photo stays in the background; the text moves to the bottom of the screen, over
-   a bottom-to-top veil, and the dog's face stays clear at the top. */
-@media (max-width: 1100px) {
-  .opening-photo {
-    object-position: 74% 30%;
-  }
-  .opening-backdrop::before {
-    background: linear-gradient(0deg, rgba(24, 22, 20, 0.92) 0%, rgba(24, 22, 20, 0.72) 38%, rgba(24, 22, 20, 0.2) 68%, rgba(24, 22, 20, 0.05) 100%);
-  }
-  .hero-content {
-    justify-content: flex-end;
-    padding-bottom: clamp(40px, 8vh, 72px) !important;
-  }
-}
-
-@media (max-width: 760px) {
-  /* Photo a little larger and pulled up: the dog's eyes sit above
-     the title instead of behind it. */
-  .opening-photo {
-    inset: auto 0 auto 0;
-    top: -22%;
-    height: 122%;
-  }
-  .hero-content {
-    min-height: calc(100vh - 86px);
-    min-height: calc(100svh - 86px);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .opening-photo,
-  .hero-content {
-    transform: none !important;
+  .hero-phrase {
+    animation: none;
   }
   .animate .benefit {
     opacity: 1;

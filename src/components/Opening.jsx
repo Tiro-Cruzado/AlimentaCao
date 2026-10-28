@@ -1,84 +1,114 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Hero from "./Hero.jsx";
 import Benefits from "./Benefits.jsx";
+import { OPENING_SLIDES, OPENING_INTERVAL } from "../data/opening.js";
 
-// Home opening: the dog photo stays still in the background while the title
-// and the cards pass over it. As the scroll advances:
-//   - the title moves up and fades out (--exit goes from 0 to 1)
-//   - the veil over the photo darkens, so the white cards stand out
-//   - each card slides in from below when it reaches the screen
-// It is all CSS; the JS only writes --exit and marks the cards visible. Whoever
-// asked for less motion in the system (prefers-reduced-motion) sees the static version.
+// Home opening: green panel with the text on the left and the NGO's photos on
+// the right (on the phone, photo on top and panel below), separated by a soft
+// curve with a dark outline. The photos and phrases come from
+// src/data/opening.js and fade from one to the other. Below, the "how to help"
+// cards come in one by one as they reach the screen.
+//
+// Whoever asked the system for less motion (prefers-reduced-motion) sees the
+// first photo, still, and the cards without animation.
+
+// Curve between panel and photo. Drawn in a fixed box and stretched to the
+// section; the outline keeps its thickness (non-scaling-stroke).
+const EDGE_DESKTOP = "M46 0 C 140 190, 30 430, 112 654";
+const EDGE_MOBILE = "M0 34 C 110 8, 250 60, 390 26";
+const PANEL = "#467333";
+const OUTLINE = "#23312F";
+
 export default function Opening() {
   const root = useRef(null);
+  // Carousel: slide on screen, and whether the other photos may load yet
+  // (only after the page is up, so the first one arrives fast).
+  const [current, setCurrent] = useState(0);
+  const [ready, setReady] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const total = OPENING_SLIDES.length;
 
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  // Next slide every few seconds. Stops when the tab is hidden or paused, and
+  // never starts for whoever asked the system for less motion. Choosing a
+  // slide by hand restarts the count.
+  useEffect(() => {
+    if (total < 2 || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => {
+      if (!document.hidden) setCurrent((i) => (i + 1) % total);
+    }, OPENING_INTERVAL * 1000);
+    return () => window.clearInterval(timer);
+  }, [total, paused, current]);
+
+  // Cards: entrance when they appear on screen.
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Cards: entrance when they appear on screen.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
     const cards = el.querySelectorAll(".benefit");
-    let observer;
-    if (!reducedMotion && "IntersectionObserver" in window) {
-      el.classList.add("animate");
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              e.target.classList.add("visible");
-              observer.unobserve(e.target);
-            }
+    el.classList.add("animate");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("visible");
+            observer.unobserve(e.target);
           }
-        },
-        { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
-      );
-      cards.forEach((c) => observer.observe(c));
-    }
-
-    if (reducedMotion) return () => observer?.disconnect();
-
-    // Title and veil: follow the scroll.
-    const heroContent = el.querySelector(".hero-content");
-    let frame = 0;
-    function update() {
-      frame = 0;
-      const height = heroContent.offsetHeight || window.innerHeight;
-      const scrolled = Math.max(0, -el.getBoundingClientRect().top);
-      const exit = Math.min(1, scrolled / (height * 0.75));
-      el.style.setProperty("--exit", exit.toFixed(3));
-    }
-    function onScroll() {
-      if (!frame) frame = requestAnimationFrame(update);
-    }
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-      observer?.disconnect();
-    };
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+    );
+    cards.forEach((c) => observer.observe(c));
+    return () => observer.disconnect();
   }, []);
+
+  const go = (i) => setCurrent(((i % total) + total) % total);
 
   return (
     <section className="opening" ref={root}>
-      <div className="opening-track" aria-hidden="true">
-        <div className="opening-backdrop">
-          <img
-          className="opening-photo"
-          src="/hero-cachorro.webp"
-          alt=""
-          width="984"
-          height="656"
-          fetchPriority="high"
-          />
+      <div className="hero-split">
+        <div className="hero-photos" aria-hidden="true">
+          {OPENING_SLIDES.map((s, i) =>
+            i === 0 || ready ? (
+              <img
+                key={s.src}
+                className={`opening-photo${i === current ? " is-current" : ""}`}
+                src={s.src}
+                alt=""
+                width={s.width}
+                height={s.height}
+                fetchPriority={i === 0 ? "high" : "low"}
+                decoding="async"
+                style={{ "--focus-desktop": s.focus?.desktop, "--focus-mobile": s.focus?.mobile }}
+              />
+            ) : null
+          )}
         </div>
+
+        <svg className="hero-edge hero-edge-desktop" viewBox="0 0 170 654" preserveAspectRatio="none" aria-hidden="true">
+          <path d={`${EDGE_DESKTOP} L0 654 L0 0 Z`} fill={PANEL} />
+          <path d={EDGE_DESKTOP} fill="none" stroke={OUTLINE} strokeWidth="5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        </svg>
+        <svg className="hero-edge hero-edge-mobile" viewBox="0 0 390 60" preserveAspectRatio="none" aria-hidden="true">
+          <path d={`${EDGE_MOBILE} L390 60 L0 60 Z`} fill={PANEL} />
+          <path d={EDGE_MOBILE} fill="none" stroke={OUTLINE} strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        </svg>
+
+        <Hero
+          slides={OPENING_SLIDES}
+          current={current}
+          onSelect={go}
+          paused={paused}
+          onTogglePause={() => setPaused((p) => !p)}
+        />
       </div>
-      <Hero />
       <Benefits />
     </section>
   );

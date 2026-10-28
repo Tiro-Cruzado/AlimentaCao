@@ -40,10 +40,10 @@ const ITEMS = [
 
 export default function Benefits() {
   return (
-    <section className="benefits" style={{ maxWidth: 1160, margin: "0 auto", padding: "clamp(24px,6vh,64px) clamp(18px,5vw,32px) clamp(120px,30vh,280px)" }}>
+    <section className="benefits" style={{ maxWidth: 1160, margin: "0 auto", padding: "clamp(40px,6vw,72px) clamp(18px,5vw,32px) clamp(56px,8vw,96px)" }}>
       <div className="benefits-grid">
         {ITEMS.map((it, i) => (
-          <div key={it.title} className="benefit" style={{ transitionDelay: `${i * 120}ms`, background: "#FFFDFB", border: "1px solid #EDE4DA", borderRadius: 28, padding: 30, boxShadow: "0 18px 50px rgba(0,0,0,0.28)" }}>
+          <div key={it.title} className="benefit" style={{ transitionDelay: `${i * 120}ms`, background: "#FFFDFB", border: "1px solid #EDE4DA", borderRadius: 28, padding: 30, boxShadow: "0 18px 50px rgba(35,49,47,0.08)" }}>
             <span aria-hidden="true" style={{ width: 48, height: 48, borderRadius: 16, background: it.background, display: "flex", alignItems: "center", justifyContent: "center" }}>
               <svg width="30" height="30" viewBox="3 3 18 18" fill={it.icon === "paw" ? it.ink : "none"} stroke={it.icon === "paw" ? "none" : it.ink} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 {ICONS[it.icon]}

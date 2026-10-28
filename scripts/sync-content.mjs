@@ -160,7 +160,9 @@ async function syncOnce() {
     name: a.name,
     species: a.species,
     speciesOther: a.speciesOther || undefined,
-    size: a.size,
+    // Size (porte) only makes sense for dogs; a cat registered before the
+    // field was hidden may still carry one.
+    size: a.species === "dog" ? a.size || undefined : undefined,
     sex: a.sex,
     age: a.age,
     rescueDate: a.rescueDate,

@@ -512,8 +512,7 @@ export default function Gallery() {
                         letterSpacing: "0.02em",
                       }}
                     >
-                      {speciesName(a)} · {a.age} · Porte{" "}
-                      {SIZES[a.size].label} · {a.sex}
+                      {[speciesName(a), a.age, SIZES[a.size] && `Porte ${SIZES[a.size].label}`, a.sex].filter(Boolean).join(" · ")}
                     </p>
                     <p
                       style={{

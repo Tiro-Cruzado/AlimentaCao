@@ -32,6 +32,8 @@ export default {
     },
     {
       name: "size", title: "Porte", type: "string", group: "main",
+      description: "Só para cães. Para gatos e outros animais o campo não aparece.",
+      hidden: ({ document }) => document?.species !== "dog",
       options: {
         list: [
           { title: "Pequeno (até 10 kg)", value: "small" },
@@ -39,7 +41,8 @@ export default {
           { title: "Grande (acima de 25 kg)", value: "large" }
         ], layout: "radio"
       },
-      validation: (r) => r.required()
+      validation: (r) =>
+        r.custom((value, { document }) => (document?.species === "dog" && !value ? "Escolha o porte do cão." : true))
     },
     { name: "sex", title: "Sexo", type: "string", group: "main", options: { list: ["Macho", "Fêmea"], layout: "radio" }, validation: (r) => r.required() },
     {

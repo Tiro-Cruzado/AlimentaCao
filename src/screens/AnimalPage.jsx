@@ -57,6 +57,7 @@ export default function AnimalPage({ slug }) {
     animal.rescueDate,
     adopted && animal.adoptionDate ? new Date(animal.adoptionDate) : undefined
   );
+  // Size (porte) only exists for dogs.
   const size = SIZES[animal.size];
 
   const healthItems = [
@@ -86,7 +87,7 @@ export default function AnimalPage({ slug }) {
           {animal.name}
         </h1>
         <p style={{ fontFamily: fonts.heading, fontWeight: 600, fontSize: 15, color: colors.ink3, margin: "10px 0 0", letterSpacing: "0.02em" }}>
-          {speciesName(animal)} · {animal.age} · Porte {size.label} ({size.detail}) · {animal.sex}
+          {[speciesName(animal), animal.age, size && `Porte ${size.label} (${size.detail})`, animal.sex].filter(Boolean).join(" · ")}
         </p>
 
         <div className="animal-layout">
@@ -129,7 +130,7 @@ export default function AnimalPage({ slug }) {
               <Row label={adopted ? "Ficou conosco" : "Esperando há"}><span key={mounted ? "today" : "build"} suppressHydrationWarning>{waiting}</span></Row>
             )}
             <Row label="Onde está">{animal.location}</Row>
-            <Row label="Porte">{size.label} · {size.detail}</Row>
+            {size && <Row label="Porte">{size.label} · {size.detail}</Row>}
 
             {showHealth && (
               <>

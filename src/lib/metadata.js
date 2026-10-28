@@ -38,7 +38,7 @@ export function animalMetadata(slug) {
   return {
     path: `/animal/${animal.slug}`,
     title: `${animal.name} · ${species} para adoção em Assis-SP · AlimentaCão`,
-    description: `${animal.name}, ${species.toLowerCase()} de porte ${size}, ${animal.age}. ${animal.summary}`.slice(0, 300)
+    description: `${animal.name}, ${species.toLowerCase()}${size ? ` de porte ${size}` : ""}, ${animal.age}. ${animal.summary}`.slice(0, 300)
   };
 }
 

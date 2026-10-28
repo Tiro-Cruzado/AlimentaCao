@@ -24,7 +24,7 @@ export default function WallPreview() {
               Mural
             </h2>
             <p style={{ fontSize: "clamp(16px,2vw,18px)", lineHeight: 1.6, color: colors.ink2, margin: "12px 0 0", maxWidth: "32em" }}>
-              Feiras, adoções, resgates e o dia a dia da ONG.
+              Feiras, adoções, resgates e o dia a dia do projeto.
             </p>
           </div>
           <Link href="/mural" style={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: 15.5, color: colors.greenDark, textDecoration: "none", padding: "12px 20px", border: `1.5px solid ${colors.lineStrong}`, borderRadius: 999, background: colors.card }}>

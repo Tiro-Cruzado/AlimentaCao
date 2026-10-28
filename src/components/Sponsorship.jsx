@@ -180,7 +180,7 @@ export default function Sponsorship({ switcher = null }) {
           }}
         >
           Escolha um dos animais que estão esperando adoção e contribua todo mês
-          com os cuidados dele. Com o valor garantido, a ONG consegue planejar
+          com os cuidados dele. Com o valor garantido, o projeto consegue planejar
           ração, vacinas e veterinário.
         </p>
         <ul
@@ -430,7 +430,7 @@ export default function Sponsorship({ switcher = null }) {
                 marginTop: 3,
               }}
             >
-              Assim a ONG recebe os {formatBRL(amount)} inteiros todo mês. O Mercado
+              Assim o projeto recebe os {formatBRL(amount)} inteiros todo mês. O Mercado
               Pago cobra {(CARD_FEE * 100).toLocaleString("pt-BR")}% por
               cobrança.
             </span>
@@ -467,7 +467,7 @@ export default function Sponsorship({ switcher = null }) {
                 margin: "2px 0 0",
               }}
             >
-              A ONG recebe cerca de {formatBRL(charge.net)} por mês depois da
+              O projeto recebe cerca de {formatBRL(charge.net)} por mês depois da
               taxa.
             </p>
           )}

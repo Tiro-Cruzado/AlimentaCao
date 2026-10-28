@@ -9,7 +9,10 @@ import "../styles.css";
 export const metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   ...toNextMetadata({ title: SITE.title, description: SITE.description }),
-  icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" }
+  icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
+  // Google Search Console ownership check (the "Tag HTML" method): only the
+  // code from content="...", set on Vercel as GOOGLE_SITE_VERIFICATION.
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {})
 };
 
 export const viewport = { themeColor: "#FBF8F4" };

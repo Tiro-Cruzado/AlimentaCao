@@ -1,10 +1,9 @@
-// Fill in with the NGO's real data. The site uses this in the adoption buttons.
+// Fill in with the project's real data. The site uses this in the adoption buttons.
 // Donation data lives in ./payment.js.
 // whatsapp: digits only, with country and area code. E.g. "5511999998888".
 export const CONTACT = {
   whatsapp: "5518996399691",
-  email: "ongassis.alimentacao@gmail.com",
-  legalName: "Associação AlimentaCão"
+  email: "ongassis.alimentacao@gmail.com"
 };
 
 export function adoptionLink(name) {
@@ -17,7 +16,7 @@ export function adoptionLink(name) {
   )}&body=${encodeURIComponent(text)}`;
 }
 
-// Opens a conversation with the NGO: WhatsApp if there is a number, e-mail if not.
+// Opens a conversation with the project: WhatsApp if there is a number, e-mail if not.
 export function chatLink(text, subject = "Contato pelo site") {
   if (CONTACT.whatsapp) {
     return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`;

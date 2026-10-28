@@ -1,3 +1,5 @@
+import { chatLink } from "../data/contact.js";
+
 export default function About() {
   return (
     <section
@@ -47,9 +49,28 @@ export default function About() {
               margin: "16px 0 0",
             }}
           >
-            Hoje somos uma organização sem fins lucrativos de Assis - SP,
-            formada por voluntários, sem abrigo fixo: cada animal fica em uma casa até ser
+            Hoje somos um projeto social de Assis - SP que resgata e ajuda animais,
+            formado por voluntários, sem abrigo fixo: cada animal fica em uma casa até ser
             adotado. Não recusamos casos graves.
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(16px,2vw,18px)",
+              lineHeight: 1.65,
+              color: "#50605E",
+              margin: "12px 0 0",
+            }}
+          >
+            Viu um cão ou gato abandonado, ferido ou precisando de ajuda em Assis?{" "}
+            <a
+              href={chatLink("Olá! Vi um animal precisando de ajuda em Assis.", "Animal precisando de ajuda")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#467333", fontWeight: 600 }}
+            >
+              Fale com a gente pelo WhatsApp
+            </a>
+            .
           </p>
           <div
             style={{

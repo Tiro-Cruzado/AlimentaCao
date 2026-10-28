@@ -49,7 +49,7 @@ export default function Footer() {
               maxWidth: "26em",
             }}
           >
-            Organização sem fins lucrativos de Assis - SP, mantida por
+            Projeto social de Assis - SP, mantido por
             voluntários e por quem doa.
           </p>
         </div>

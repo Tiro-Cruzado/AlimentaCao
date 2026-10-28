@@ -15,10 +15,10 @@ export default function Hero({ slides = [], current = 0, onSelect, paused = fals
         padding: "56px clamp(24px,4vw,56px) 56px max(clamp(18px,5vw,32px), calc((100vw - 1160px) / 2 + 32px))"
       }}
     >
-      {/* The h1 is the line with what people search on Google ("ONG", "animal",
+      {/* The h1 is the line with what people search on Google ("projeto social", "animais",
           "Assis"). The phrase below keeps the big look, as a paragraph. */}
       <h1 className="hero-badge" style={{ display: "inline-block", margin: 0, lineHeight: "inherit", fontFamily: fonts.heading, fontWeight: 600, fontSize: 13, letterSpacing: "0.14em", textTransform: "uppercase", color: "#34492A", background: colors.greenLight, padding: "8px 16px", borderRadius: 999 }}>
-        ONG de resgate animal · Assis - SP
+        Projeto social de resgate animal · Assis - SP
       </h1>
 
       {/* The phrase changes with the photo (src/data/opening.js). The key makes
@@ -28,7 +28,7 @@ export default function Hero({ slides = [], current = 0, onSelect, paused = fals
       </p>
 
       <p className="hero-text" style={{ fontSize: "clamp(16px,1.5vw,18px)", lineHeight: 1.6, margin: "20px 0 0", maxWidth: "30em" }}>
-        A AlimentaCão cuida de cães e gatos resgatados das ruas de Assis, no interior de São Paulo, até que encontrem uma família.
+        A AlimentaCão é um projeto social que resgata e ajuda cães e gatos abandonados nas ruas de Assis, no interior de São Paulo, até que encontrem uma família.
       </p>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>

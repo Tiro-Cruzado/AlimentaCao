@@ -32,7 +32,7 @@ const ICONS = {
 };
 
 const ITEMS = [
-  { icon: "house", background: "#FBEEDF", ink: "#B8741A", title: "Seja lar temporário", text: "Abrigar um animal por algumas semanas não custa nada e é o que mais falta. A ONG cobre ração e veterinário." },
+  { icon: "house", background: "#FBEEDF", ink: "#B8741A", title: "Seja lar temporário", text: "Abrigar um animal por algumas semanas não custa nada e é o que mais falta. O projeto cobre ração e veterinário." },
   { icon: "heart", background: "#EAF2E4", ink: "#467333", title: "Doe uma vez", comingSoon: !FEATURES.donation, text: FEATURES.donation ? "Qualquer valor entra no caixa de ração, castração e emergências veterinárias do mês." : "Em breve você vai poder doar qualquer valor pelo site, para ração, castração e emergências veterinárias." },
   { icon: "calendar", background: "#F6E7E4", ink: "#A34E3F", title: "Apadrinhe", comingSoon: !FEATURES.sponsorship, text: FEATURES.sponsorship ? `Escolha um animal e contribua todo mês com os cuidados dele, a partir de R$ ${LOWEST_SPONSORSHIP}. Cancele quando quiser.` : "Em breve você vai poder escolher um animal e contribuir todo mês com os cuidados dele." },
   { icon: "paw", background: "#E4EDF2", ink: "#3A5A80", title: "Adote", text: "Conheça quem está esperando um lar. A adoção é gratuita, e a gente conversa antes para ter certeza de que a casa combina com o animal." }

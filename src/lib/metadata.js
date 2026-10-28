@@ -11,22 +11,22 @@ export const SITE_ORIGIN = (
 ).replace(/\/$/, "");
 
 // Title and description per page. They are what shows up in the Google result and in
-// the card when someone shares the link on WhatsApp — for an NGO, it is the shop window.
+// the card when someone shares the link on WhatsApp — for a social project, it is the shop window.
 
-// The title and description carry the words people type on Google ("ONG",
-// "animais", "Assis", "adoção", "cães e gatos"), in the order they type them.
+// The title and description carry the words people type on Google ("projeto
+// social", "ajuda", "resgate", "animais", "Assis", "adoção", "cães e gatos").
 export const SITE = {
   name: "AlimentaCão",
-  title: "AlimentaCão — ONG de animais em Assis-SP | Adote um cão ou gato",
+  title: "AlimentaCão — Projeto social de ajuda e resgate de animais em Assis-SP",
   description:
-    "ONG de proteção animal em Assis, interior de São Paulo. Resgatamos cães e gatos das ruas, cuidamos com ração, vacina e veterinário e buscamos famílias para adoção responsável. Adote ou doe."
+    "Projeto social de Assis-SP que resgata e ajuda animais abandonados: cães e gatos recebem ração, vacina, castração e veterinário até a adoção responsável. Adote, doe ou seja lar temporário."
 };
 
 export function wallMetadata() {
   return {
-    title: "Mural · AlimentaCão, ONG de animais em Assis-SP",
+    title: "Mural · AlimentaCão, projeto social de animais em Assis-SP",
     path: "/mural",
-    description: "Feiras de adoção, animais que encontraram uma família, resgates e o dia a dia da AlimentaCão, em fotos e vídeos."
+    description: "Feiras de adoção, resgates de animais em Assis-SP, cães e gatos que encontraram uma família e o dia a dia do projeto AlimentaCão, em fotos e vídeos."
   };
 }
 
@@ -55,15 +55,17 @@ export function toNextMetadata({ title, description, path }) {
 }
 
 // Structured data (schema.org): tells Google, in its own format, that this is
-// an NGO in Assis - SP, with contact and Instagram. It feeds the panel on the
-// side of the results and the local searches ("ong de animais em Assis").
+// a social project in Assis - SP, with contact and Instagram. It feeds the panel
+// on the side of the results and the local searches ("projeto social animais Assis").
+// "Organization" and not "NGO": the project is not a registered entity yet.
 export function organizationJsonLd() {
   const org = {
     "@context": "https://schema.org",
-    "@type": "NGO",
-    "@id": `${SITE_ORIGIN}/#ong`,
+    "@type": "Organization",
+    "@id": `${SITE_ORIGIN}/#projeto`,
     name: SITE.name,
-    alternateName: ["Projeto AlimentaCão", "AlimentaCao", CONTACT.legalName].filter(Boolean),
+    alternateName: ["Projeto AlimentaCão", "AlimentaCao", "AlimentaCão Assis"],
+    slogan: "Projeto social de resgate e ajuda a animais em Assis-SP",
     url: `${SITE_ORIGIN}/`,
     logo: `${SITE_ORIGIN}/apple-touch-icon.png`,
     description: SITE.description,
@@ -71,7 +73,7 @@ export function organizationJsonLd() {
     telephone: CONTACT.whatsapp ? `+${CONTACT.whatsapp}` : undefined,
     address: { "@type": "PostalAddress", addressLocality: "Assis", addressRegion: "SP", addressCountry: "BR" },
     areaServed: { "@type": "City", name: "Assis", containedInPlace: { "@type": "State", name: "São Paulo" } },
-    knowsAbout: ["Resgate de animais", "Adoção de cães", "Adoção de gatos", "Castração", "Proteção animal"],
+    knowsAbout: ["Projeto social", "Resgate de animais", "Ajuda a animais abandonados", "Resgate de cães e gatos", "Adoção de cães", "Adoção de gatos", "Lar temporário", "Castração", "Proteção animal"],
     sameAs: [instagramProfile].filter(Boolean)
   };
   const website = {
@@ -81,7 +83,7 @@ export function organizationJsonLd() {
     name: SITE.name,
     url: `${SITE_ORIGIN}/`,
     inLanguage: "pt-BR",
-    publisher: { "@id": `${SITE_ORIGIN}/#ong` }
+    publisher: { "@id": `${SITE_ORIGIN}/#projeto` }
   };
   return [org, website];
 }

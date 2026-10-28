@@ -63,7 +63,7 @@ export const SEED = [
     summary:
       "Resgatada de um motor de carro. Em tratamento respiratório, precisa de remédio contínuo.",
     story: [
-      "A Amora foi encontrada dentro do compartimento do motor de um carro estacionado, em junho. Quem ouviu o miado foi o dono do veículo, que desistiu de dar a partida e chamou a ONG.",
+      "A Amora foi encontrada dentro do compartimento do motor de um carro estacionado, em junho. Quem ouviu o miado foi o dono do veículo, que desistiu de dar a partida e chamou o projeto.",
       "Ela saiu de lá com queimadura leve na pata e uma infecção respiratória que ainda está sendo tratada. Toma medicação duas vezes ao dia e faz reavaliação mensal.",
       "Apesar do histórico, é uma gata absurdamente confiante. Dorme na barriga de quem estiver por perto e reclama alto quando a porta do quarto fecha.",
     ],
@@ -110,7 +110,7 @@ export const SEED = [
       neutered: false,
       vaccinated: true,
       dewormed: true,
-      notes: "Castração prevista para os 6 meses, custeada pela ONG.",
+      notes: "Castração prevista para os 6 meses, custeada pelo projeto.",
     },
     goodWith: { children: "yes", dogs: "yes", cats: "yes" },
     media: [
@@ -294,7 +294,7 @@ export const SEED = [
     summary:
       "Achado com o irmão numa caixa de papelão na beira da estrada. É o primeiro a chegar no pote.",
     story: [
-      "Paçoca e o irmão, Panda, foram deixados numa caixa de papelão na saída da cidade. Quem parou o carro foi um caminhoneiro, que trouxe os dois no colo até a ONG.",
+      "Paçoca e o irmão, Panda, foram deixados numa caixa de papelão na saída da cidade. Quem parou o carro foi um caminhoneiro, que trouxe os dois no colo até o projeto.",
       "Chegaram com vermes e muita fome. Três semanas de ração de filhote e vermífugo depois, o Paçoca dobrou de peso e descobriu que consegue latir.",
     ],
     temperament: ["Curioso", "Comilão", "Brincalhão"],
@@ -303,7 +303,7 @@ export const SEED = [
       vaccinated: true,
       dewormed: true,
       notes:
-        "Primeira dose da vacina aplicada. Castração garantida pela ONG aos seis meses.",
+        "Primeira dose da vacina aplicada. Castração garantida pelo projeto aos seis meses.",
     },
     goodWith: { children: "yes", dogs: "yes", cats: "untested" },
     media: [
@@ -348,7 +348,7 @@ export const SEED = [
       vaccinated: true,
       dewormed: true,
       notes:
-        "Primeira dose da vacina aplicada. Castração garantida pela ONG aos seis meses.",
+        "Primeira dose da vacina aplicada. Castração garantida pelo projeto aos seis meses.",
     },
     goodWith: { children: "yes", dogs: "yes", cats: "untested" },
     media: [
@@ -385,7 +385,7 @@ export const SEED = [
       vaccinated: true,
       dewormed: true,
       notes:
-        "Duas doses da vacina aplicadas. Castração garantida pela ONG aos seis meses.",
+        "Duas doses da vacina aplicadas. Castração garantida pelo projeto aos seis meses.",
     },
     goodWith: { children: "yes", dogs: "yes", cats: "yes" },
     media: [
@@ -422,7 +422,7 @@ export const SEED = [
       vaccinated: true,
       dewormed: true,
       notes:
-        "Duas doses da vacina aplicadas. Castração garantida pela ONG aos seis meses.",
+        "Duas doses da vacina aplicadas. Castração garantida pelo projeto aos seis meses.",
     },
     goodWith: { children: "yes", dogs: "yes", cats: "untested" },
     media: [
@@ -487,9 +487,9 @@ export const SEED = [
     summary:
       "Puxou carroça a vida inteira. Hoje descansa num sítio parceiro e espera um pasto definitivo.",
     story: [
-      "A Estrela puxava carroça de reciclagem e foi entregue à ONG pelo próprio dono, quando ele não pôde mais mantê-la. Chegou magra e com feridas do arreio.",
+      "A Estrela puxava carroça de reciclagem e foi entregue ao projeto pelo próprio dono, quando ele não pôde mais mantê-la. Chegou magra e com feridas do arreio.",
       "Recuperou o peso em um ano de pasto e ração. É mansa, aceita cabresto e gosta de ser escovada.",
-      "A adoção de um cavalo exige espaço: pasto cercado, abrigo e água. A ONG visita o local antes.",
+      "A adoção de um cavalo exige espaço: pasto cercado, abrigo e água. O projeto visita o local antes.",
     ],
     temperament: ["Mansa", "Paciente", "Gosta de escovação"],
     health: {
@@ -528,7 +528,7 @@ export const SEED = [
     story: [
       "O Trovão foi recolhido da beira da rodovia depois de dias andando solto. Ninguém apareceu para buscá-lo.",
       "É jovem e nunca foi domado. Aproxima-se por curiosidade, mas ainda se assusta com movimentos bruscos.",
-      "A adoção de um cavalo exige espaço: pasto cercado, abrigo e água. A ONG visita o local antes.",
+      "A adoção de um cavalo exige espaço: pasto cercado, abrigo e água. O projeto visita o local antes.",
     ],
     temperament: ["Curioso", "Arisco com estranhos", "Jovem"],
     health: {

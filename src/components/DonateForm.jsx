@@ -602,7 +602,7 @@ export default function DonateForm({ switcher = null, centered = false }) {
           (!PIX.key ? (
             // PIX_KEY is missing from the environment (Vercel or .env.local).
             <Notice title="Pix em breve">
-              Estamos terminando de configurar o Pix da ONG. Tente de novo em
+              Estamos terminando de configurar o Pix do projeto. Tente de novo em
               breve.
             </Notice>
           ) : qrVisible ? (
@@ -676,7 +676,7 @@ export default function DonateForm({ switcher = null, centered = false }) {
                 }}
               >
                 O código já vem com o valor preenchido. Pix não tem taxa: chega
-                inteiro na conta da ONG.
+                inteiro na conta do projeto.
               </p>
             </>
           ))}
@@ -754,8 +754,8 @@ export default function DonateForm({ switcher = null, centered = false }) {
                     }}
                   >
                     {chosenAmount > 0 && !cardProblem
-                      ? `Assim a ONG recebe os ${formatBRL(chosenAmount)} inteiros. O Mercado Pago cobra ${(CARD_FEE * 100).toLocaleString("pt-BR")}% por pagamento.`
-                      : "Assim a ONG recebe o valor inteiro que você escolheu."}
+                      ? `Assim o projeto recebe os ${formatBRL(chosenAmount)} inteiros. O Mercado Pago cobra ${(CARD_FEE * 100).toLocaleString("pt-BR")}% por pagamento.`
+                      : "Assim o projeto recebe o valor inteiro que você escolheu."}
                   </span>
                 </span>
               </label>
@@ -793,7 +793,7 @@ export default function DonateForm({ switcher = null, centered = false }) {
                         margin: "2px 0 0",
                       }}
                     >
-                      A ONG recebe cerca de {formatBRL(breakdown.net)} depois da
+                      O projeto recebe cerca de {formatBRL(breakdown.net)} depois da
                       taxa.
                     </p>
                   )}

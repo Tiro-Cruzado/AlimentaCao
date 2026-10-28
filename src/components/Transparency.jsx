@@ -42,7 +42,7 @@ export default function Transparency() {
             Para onde vai o dinheiro
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.6, color: "#50605E", margin: "16px 0 0" }}>
-            A AlimentaCão é mantida por voluntários e por quem doa. As doações pagam o cuidado direto com os animais, do resgate até a adoção.
+            A AlimentaCão é um projeto social mantido por voluntários e por quem doa. As doações pagam o cuidado direto com os animais, do resgate até a adoção.
           </p>
 
           {/* What goes into each part of the bar. The little square on each row

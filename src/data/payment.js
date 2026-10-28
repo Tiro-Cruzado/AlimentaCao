@@ -49,7 +49,7 @@ export const PIX = {
   // before confirming and in the receipt, so it is clear the money is for the
   // NGO even while it lands in the treasurer's account. Accents are removed
   // (the standard only accepts ASCII). "" leaves it out.
-  description: "Doacao para a ONG AlimentaCao",
+  description: "Doacao para o projeto AlimentaCao",
 
   // While the NGO's legal registration is in progress, the Pix goes to the
   // account of the treasurer, who is responsible for the project's finances.
